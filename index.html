@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KharchBook</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --bg:#f4f6f8;
+  --card:#ffffff;
+  --text:#111111;
+  --muted:#777777;
+  --border:#e5e5e5;
+  --primary:#111111;
+  --danger:#e53935;
+  --green:#159447;
+}
+
+body.dark{
+  --bg:#121212;
+  --card:#1e1e1e;
+  --text:#ffffff;
+  --muted:#aaaaaa;
+  --border:#333333;
+  --primary:#ffffff;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  padding:18px;
+  transition:.3s;
+}
+
+.app{
+  max-width:600px;
+  margin:auto;
+}
+
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.logo{
+  font-size:26px;
+  font-weight:bold;
+}
+
+.header button{
+  width:auto;
+  margin:0;
+  padding:10px 14px;
+  background:var(--card);
+  color:var(--text);
+  border:1px solid var(--border);
+}
+
+.card{
+  background:var(--card);
+  padding:20px;
+  border-radius:20px;
+  margin-bottom:16px;
+  box-shadow:0 5px 20px #00000012;
+}
+
+.totalBox{
+  text-align:center;
+  padding:28px 15px;
+}
+
+.small{
+  color:var(--muted);
+  font-size:15px;
+}
+
+.total{
+  font-size:42px;
+  font-weight:bold;
+  margin:8px 0;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.stat{
+  padding:15px;
+  border:1px solid var(--border);
+  border-radius:14px;
+}
+
+.stat b{
+  display:block;
+  font-size:22px;
+  margin-top:5px;
+}
+
+h2{
+  margin-bottom:15px;
+  font-size:21px;
+}
+
+input,select,button{
+  width:100%;
+  padding:14px;
+  margin-top:10px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+  font-size:16px;
+}
+
+button{
+  background:var(--primary);
+  color:var(--bg);
+  border:none;
+  font-weight:bold;
+}
+
+button:active{
+  transform:scale(.98);
+}
+
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.expense{
+  padding:15px 0;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.expense:last-child{
+  border-bottom:none;
+}
+
+.expenseName{
+  font-weight:bold;
+  font-size:17px;
+}
+
+.expenseInfo{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:5px;
+}
+
+.expenseRight{
+  text-align:right;
+  white-space:nowrap;
+}
+
+.amount{
+  font-weight:bold;
+  font-size:18px;
+}
+
+.deleteBtn,.editBtn{
+  width:auto;
+  padding:7px 10px;
+  margin-left:5px;
+  font-size:13px;
+}
+
+.deleteBtn{
+  background:var(--danger);
+  color:white;
+}
+
+.editBtn{
+  background:#555;
+  color:white;
+}
+
+.progress{
+  height:12px;
+  background:var(--border);
+  border-radius:20px;
+  overflow:hidden;
+  margin:12px 0;
+}
+
+.progressBar{
+  height:100%;
+  width:0%;
+  background:var(--green);
+  transition:.4s;
+}
+
+.warning{
+  color:var(--danger);
+  font-weight:bold;
+}
+
+.categoryRow{
+  display:flex;
+  justify-content:space-between;
+  padding:10px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.empty{
+  text-align:center;
+  color:var(--muted);
+  padding:25px 5px;
+}
+
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.secondary{
+  background:#666;
+  color:white;
+}
+
+.dangerFull{
+  background:var(--danger);
+  color:white;
+}
+
+footer{
+  text-align:center;
+  color:var(--muted);
+  padding:20px;
+  font-size:13px;
+}
+
+@media(max-width:400px){
+  body{
+    padding:12px;
+  }
+
+  .total{
+    font-size:36px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="header">
+    <div class="logo">💰 KharchBook</div>
+    <button onclick="toggleDark()">🌙</button>
+  </div>
+
+
+  <!-- TOTAL -->
+  <div class="card totalBox">
+
+    <div class="small">Total Kharcha</div>
+
+    <div class="total">
+      ₹<span id="total">0</span>
+    </div>
+
+    <div class="small">
+      Is month: ₹<span id="monthTotal">0</span>
+    </div>
+
+  </div>
+
+
+  <!-- STATS -->
+  <div class="stats">
+
+    <div class="card stat">
+      <div class="small">Aaj ka Kharcha</div>
+      <b>₹<span id="todayTotal">0</span></b>
+    </div>
+
+    <div class="card stat">
+      <div class="small">Total Entries</div>
+      <b id="entryCount">0</b>
+    </div>
+
+  </div>
+
+
+  <!-- BUDGET -->
+  <div class="card">
+
+    <h2>🎯 Monthly Budget</h2>
+
+    <input
+      id="budget"
+      type="number"
+      placeholder="Monthly budget ₹"
+      onchange="saveBudget()"
+    >
+
+    <div class="progress">
+      <div id="progressBar" class="progressBar"></div>
+    </div>
+
+    <div class="small" id="budgetText">
+      Budget set nahi hai
+    </div>
+
+  </div>
+
+
+  <!-- ADD EXPENSE -->
+  <div class="card">
+
+    <h2 id="formTitle">➕ Expense Add Karo</h2>
+
+    <input
+      id="name"
+      type="text"
+      placeholder="Kis cheez par kharch hua?"
+    >
+
+    <input
+      id="amount"
+      type="number"
+      placeholder="Amount ₹"
+    >
+
+    <select id="category">
+      <option value="Food">🍔 Food</option>
+      <option value="Petrol">⛽ Petrol</option>
+      <option value="Shopping">🛒 Shopping</option>
+      <option value="Bills">💡 Bills</option>
+      <option value="Travel">🚗 Travel</option>
+      <option value="Health">💊 Health</option>
+      <option value="Other">📦 Other</option>
+    </select>
+
+    <input
+      id="date"
+      type="date"
+    >
+
+    <button onclick="saveExpense()" id="saveBtn">
+      Add Expense
+    </button>
+
+    <button
+      onclick="cancelEdit()"
+      id="cancelBtn"
+      class="secondary"
+      style="display:none;"
+    >
+      Cancel Edit
+    </button>
+
+  </div>
+
+
+  <!-- SEARCH -->
+  <div class="card">
+
+    <h2>🔎 Expenses Search</h2>
+
+    <input
+      id="search"
+      type="text"
+      placeholder="Expense search karo..."
+      oninput="render()"
+    >
+
+    <select id="filterCategory" onchange="render()">
+      <option value="All">All Categories</option>
+      <option value="Food">🍔 Food</option>
+      <option value="Petrol">⛽ Petrol</option>
+      <option value="Shopping">🛒 Shopping</option>
+      <option value="Bills">💡 Bills</option>
+      <option value="Travel">🚗 Travel</option>
+      <option value="Health">💊 Health</option>
+      <option value="Other">📦 Other</option>
+    </select>
+
+  </div>
+
+
+  <!-- CATEGORY SUMMARY -->
+  <div class="card">
+
+    <h2>📊 Category Summary</h2>
+
+    <div id="categories"></div>
+
+  </div>
+
+
+  <!-- EXPENSE LIST -->
+  <div class="card">
+
+    <h2>📋 Expenses</h2>
+
+    <div id="expenses"></div>
+
+  </div>
+
+
+  <!-- ACTIONS -->
+  <div class="card">
+
+    <h2>⚙️ Data</h2>
+
+    <div class="actions">
+
+      <button
+        class="secondary"
+        onclick="exportCSV()"
+      >
+        📤 Export CSV
+      </button>
+
+      <button
+        class="dangerFull"
+        onclick="clearAll()"
+      >
+        🗑️ Clear All
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <footer>
+    KharchBook • Your Personal Expense Tracker
+  </footer>
+
+</div>
+
+
+<script>
+
+let expenses =
+  JSON.parse(localStorage.getItem("kharchbook_expenses")) || [];
+
+let budget =
+  Number(localStorage.getItem("kharchbook_budget")) || 0;
+
+let editIndex = -1;
+
+
+/* TODAY DATE */
+
+function todayDate(){
+
+  let d = new Date();
+
+  let month = String(d.getMonth()+1).padStart(2,"0");
+
+  let day = String(d.getDate()).padStart(2,"0");
+
+  return d.getFullYear() + "-" + month + "-" + day;
+}
+
+
+/* INITIAL LOAD */
+
+document.getElementById("date").value = todayDate();
+
+document.getElementById("budget").value =
+  budget || "";
+
+render();
+
+
+/* SAVE EXPENSE */
+
+function saveExpense(){
+
+  let name =
+    document.getElementById("name").value.trim();
+
+  let amount =
+    Number(document.getElementById("amount").value);
+
+  let category =
+    document.getElementById("category").value;
+
+  let date =
+    document.getElementById("date").value;
+
+
+  if(name === ""){
+    alert("Expense ka naam likho!");
+    return;
+  }
+
+  if(amount <= 0){
+    alert("Sahi amount enter karo!");
+    return;
+  }
+
+  if(date === ""){
+    alert("Date select karo!");
+    return;
+  }
+
+
+  let data = {
+    name:name,
+    amount:amount,
+    category:category,
+    date:date
+  };
+
+
+  if(editIndex === -1){
+
+    expenses.push(data);
+
+  }else{
+
+    expenses[editIndex] = data;
+
+    editIndex = -1;
+
+    document.getElementById("formTitle").textContent =
+      "➕ Expense Add Karo";
+
+    document.getElementById("saveBtn").textContent =
+      "Add Expense";
+
+    document.getElementById("cancelBtn").style.display =
+      "none";
+  }
+
+
+  saveData();
+
+  clearForm();
+
+  render();
+}
+
+
+/* CLEAR FORM */
+
+function clearForm(){
+
+  document.getElementById("name").value = "";
+
+  document.getElementById("amount").value = "";
+
+  document.getElementById("category").value = "Food";
+
+  document.getElementById("date").value = todayDate();
+}
+
+
+/* EDIT */
+
+function editExpense(index){
+
+  let e = expenses[index];
+
+  document.getElementById("name").value =
+    e.name;
+
+  document.getElementById("amount").value =
+    e.amount;
+
+  document.getElementById("category").value =
+    e.category;
+
+  document.getElementById("date").value =
+    e.date;
+
+  editIndex = index;
+
+  document.getElementById("formTitle").textContent =
+    "✏️ Expense Edit Karo";
+
+  document.getElementById("saveBtn").textContent =
+    "Update Expense";
+
+  document.getElementById("cancelBtn").style.display =
+    "block";
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+
+/* CANCEL EDIT */
+
+function cancelEdit(){
+
+  editIndex = -1;
+
+  clearForm();
+
+  document.getElementById("formTitle").textContent =
+    "➕ Expense Add Karo";
+
+  document.getElementById("saveBtn").textContent =
+    "Add Expense";
+
+  document.getElementById("cancelBtn").style.display =
+    "none";
+}
+
+
+/* DELETE */
+
+function deleteExpense(index){
+
+  if(confirm("Ye expense delete karna hai?")){
+
+    expenses.splice(index,1);
+
+    saveData();
+
+    render();
+  }
+}
+
+
+/* SAVE DATA */
+
+function saveData(){
+
+  localStorage.setItem(
+    "kharchbook_expenses",
+    JSON.stringify(expenses)
+  );
+}
+
+
+/* SAVE BUDGET */
+
+function saveBudget(){
+
+  budget =
+    Number(document.getElementById("budget").value) || 0;
+
+  localStorage.setItem(
+    "kharchbook_budget",
+    budget
+  );
+
+  render();
+}
+
+
+/* RENDER EVERYTHING */
+
+function render(){
+
+  let total = 0;
+
+  let monthTotal = 0;
+
+  let todayTotal = 0;
+
+  let today = todayDate();
+
+  let now = new Date();
+
+  let currentMonth =
+    now.getFullYear() + "-" +
+    String(now.getMonth()+1).padStart(2,"0");
+
+
+  expenses.forEach(function(e){
+
+    total += e.amount;
+
+    if(e.date.startsWith(currentMonth)){
+      monthTotal += e.amount;
+    }
+
+    if(e.date === today){
+      todayTotal += e.amount;
+    }
+
+  });
+
+
+  document.getElementById("total").textContent =
+    total.toLocaleString("en-IN");
+
+  document.getElementById("monthTotal").textContent =
+    monthTotal.toLocaleString("en-IN");
+
+  document.getElementById("todayTotal").textContent =
+    todayTotal.toLocaleString("en-IN");
+
+  document.getElementById("entryCount").textContent =
+    expenses.length;
+
+
+  renderBudget(monthTotal);
+
+  renderCategories();
+
+  renderExpenses();
+
+}
+
+
+/* BUDGET */
+
+function renderBudget(monthTotal){
+
+  let bar =
+    document.getElementById("progressBar");
+
+  let text =
+    document.getElementById("budgetText");
+
+
+  if(budget <= 0){
+
+    bar.style.width = "0%";
+
+    text.textContent =
+      "Budget set nahi hai";
+
+    text.className = "small";
+
+    return;
+  }
+
+
+  let percent =
+    Math.min((monthTotal / budget) * 100,100);
+
+  bar.style.width =
+    percent + "%";
+
+
+  let remaining =
+    budget - monthTotal;
+
+
+  if(remaining >= 0){
+
+    text.textContent =
+      "₹" +
+      remaining.toLocaleString("en-IN") +
+      " budget baki hai (" +
+      Math.round(percent) +
+      "% used)";
+
+    text.className = "small";
+
+  }else{
+
+    text.textContent =
+      "⚠️ Budget ₹" +
+      Math.abs(remaining).toLocaleString("en-IN") +
+      " se cross ho gaya!";
+
+    text.className = "warning";
+  }
+
+}
+
+
+/* CATEGORY SUMMARY */
+
+function renderCategories(){
+
+  let box =
+    document.getElementById("categories");
+
+  let totals = {};
+
+  expenses.forEach(function(e){
+
+    if(!totals[e.category]){
+      totals[e.category] = 0;
+    }
+
+    totals[e.category] += e.amount;
+
+  });
+
+
+  let keys =
+    Object.keys(totals);
+
+
+  if(keys.length === 0){
+
+    box.innerHTML =
+      '<div class="empty">Abhi data nahi hai</div>';
+
+    return;
+  }
+
+
+  keys.sort(function(a,b){
+
+    return totals[b] - totals[a];
+
+  });
+
+
+  box.innerHTML = "";
+
+
+  keys.forEach(function(category){
+
+    let row =
+      document.createElement("div");
+
+    row.className =
+      "categoryRow";
+
+    row.innerHTML =
+      "<span>" +
+      category +
+      "</span>" +
+
+      "<b>₹" +
+      totals[category].toLocaleString("en-IN") +
+      "</b>";
+
+    box.appendChild(row);
+
+  });
+
+}
+
+
+/* EXPENSE LIST */
+
+function renderExpenses(){
+
+  let box =
+    document.getElementById("expenses");
+
+  let search =
+    document.getElementById("search").value
+    .toLowerCase();
+
+  let filter =
+    document.getElementById("filterCategory").value;
+
+
+  let list =
+    expenses.filter(function(e){
+
+      let matchSearch =
+        e.name.toLowerCase().includes(search);
+
+      let matchCategory =
+        filter === "All" ||
+        e.category === filter;
+
+      return matchSearch && matchCategory;
+
+    });
+
+
+  list.sort(function(a,b){
+
+    return b.date.localeCompare(a.date);
+
+  });
+
+
+  if(list.length === 0){
+
+    box.innerHTML =
+      '<div class="empty">Koi expense nahi mila 😌</div>';
+
+    return;
+  }
+
+
+  box.innerHTML = "";
+
+
+  list.forEach(function(e){
+
+    let realIndex =
+      expenses.indexOf(e);
+
+
+    let div =
+      document.createElement("div");
+
+    div.className =
+      "expense";
+
+
+    div.innerHTML =
+
+      "<div>" +
+
+      "<div class='expenseName'>" +
+      e.name +
+      "</div>" +
+
+      "<div class='expenseInfo'>" +
+      e.category +
+      " • " +
+      formatDate(e.date) +
+      "</div>" +
+
+      "</div>" +
+
+
+      "<div class='expenseRight'>" +
+
+      "<div class='amount'>" +
+      "₹" +
+      e.amount.toLocaleString("en-IN") +
+      "</div>" +
+
+      "<button class='editBtn' " +
+      "onclick='editExpense(" +
+      realIndex +
+      ")'>Edit</button>" +
+
+      "<button class='deleteBtn' " +
+      "onclick='deleteExpense(" +
+      realIndex +
+      ")'>Delete</button>" +
+
+      "</div>";
+
+
+    box.appendChild(div);
+
+  });
+
+}
+
+
+/* FORMAT DATE */
+
+function formatDate(date){
+
+  let parts =
+    date.split("-");
+
+  return parts[2] + "/" +
+         parts[1] + "/" +
+         parts[0];
+
+}
+
+
+/* DARK MODE */
+
+function toggleDark(){
+
+  document.body.classList.toggle("dark");
+
+  localStorage.setItem(
+    "kharchbook_dark",
+    document.body.classList.contains("dark")
+  );
+
+}
+
+
+/* LOAD DARK MODE */
+
+if(
+  localStorage.getItem("kharchbook_dark") === "true"
+){
+
+  document.body.classList.add("dark");
+
+}
+
+
+/* EXPORT CSV */
+
+function exportCSV(){
+
+  if(expenses.length === 0){
+
+    alert("Export karne ke liye expense nahi hai!");
+
+    return;
+  }
+
+
+  let csv =
+    "Name,Amount,Category,Date\n";
+
+
+  expenses.forEach(function(e){
+
+    csv +=
+      '"' + e.name.replace(/"/g,'""') + '",' +
+      e.amount + ',' +
+      '"' + e.category + '",' +
+      e.date + '\n';
+
+  });
+
+
+  let blob =
+    new Blob([csv],{
+      type:"text/csv"
+    });
+
+
+  let url =
+    URL.createObjectURL(blob);
+
+
+  let a =
+    document.createElement("a");
+
+  a.href = url;
+
+  a.download =
+    "kharchbook-expenses.csv";
+
+  a.click();
+
+  URL.revokeObjectURL(url);
+
+}
+
+
+/* CLEAR ALL */
+
+function clearAll(){
+
+  if(expenses.length === 0){
+
+    alert("Data already empty hai!");
+
+    return;
+  }
+
+
+  if(
+    confirm(
+      "Saare expenses delete ho jayenge. Continue?"
+    )
+  ){
+
+    expenses = [];
+
+    saveData();
+
+    render();
+
+  }
+
+}
+
+</script>
+
+</body>
+  </html>

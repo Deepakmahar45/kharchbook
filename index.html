@@ -1,1080 +1,610 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KharchBook</title>
-
-<style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-:root{
-  --bg:#f4f6f8;
-  --card:#ffffff;
-  --text:#111111;
-  --muted:#777777;
-  --border:#e5e5e5;
-  --primary:#111111;
-  --danger:#e53935;
-  --green:#159447;
-}
-
-body.dark{
-  --bg:#121212;
-  --card:#1e1e1e;
-  --text:#ffffff;
-  --muted:#aaaaaa;
-  --border:#333333;
-  --primary:#ffffff;
-}
-
-body{
-  font-family:Arial,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  padding:18px;
-  transition:.3s;
-}
-
-.app{
-  max-width:600px;
-  margin:auto;
-}
-
-.header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:20px;
-}
-
-.logo{
-  font-size:26px;
-  font-weight:bold;
-}
-
-.header button{
-  width:auto;
-  margin:0;
-  padding:10px 14px;
-  background:var(--card);
-  color:var(--text);
-  border:1px solid var(--border);
-}
-
-.card{
-  background:var(--card);
-  padding:20px;
-  border-radius:20px;
-  margin-bottom:16px;
-  box-shadow:0 5px 20px #00000012;
-}
-
-.totalBox{
-  text-align:center;
-  padding:28px 15px;
-}
-
-.small{
-  color:var(--muted);
-  font-size:15px;
-}
-
-.total{
-  font-size:42px;
-  font-weight:bold;
-  margin:8px 0;
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-
-.stat{
-  padding:15px;
-  border:1px solid var(--border);
-  border-radius:14px;
-}
-
-.stat b{
-  display:block;
-  font-size:22px;
-  margin-top:5px;
-}
-
-h2{
-  margin-bottom:15px;
-  font-size:21px;
-}
-
-input,select,button{
-  width:100%;
-  padding:14px;
-  margin-top:10px;
-  border-radius:12px;
-  border:1px solid var(--border);
-  background:var(--card);
-  color:var(--text);
-  font-size:16px;
-}
-
-button{
-  background:var(--primary);
-  color:var(--bg);
-  border:none;
-  font-weight:bold;
-}
-
-button:active{
-  transform:scale(.98);
-}
-
-.row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.expense{
-  padding:15px 0;
-  border-bottom:1px solid var(--border);
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-}
-
-.expense:last-child{
-  border-bottom:none;
-}
-
-.expenseName{
-  font-weight:bold;
-  font-size:17px;
-}
-
-.expenseInfo{
-  color:var(--muted);
-  font-size:13px;
-  margin-top:5px;
-}
-
-.expenseRight{
-  text-align:right;
-  white-space:nowrap;
-}
-
-.amount{
-  font-weight:bold;
-  font-size:18px;
-}
-
-.deleteBtn,.editBtn{
-  width:auto;
-  padding:7px 10px;
-  margin-left:5px;
-  font-size:13px;
-}
-
-.deleteBtn{
-  background:var(--danger);
-  color:white;
-}
-
-.editBtn{
-  background:#555;
-  color:white;
-}
-
-.progress{
-  height:12px;
-  background:var(--border);
-  border-radius:20px;
-  overflow:hidden;
-  margin:12px 0;
-}
-
-.progressBar{
-  height:100%;
-  width:0%;
-  background:var(--green);
-  transition:.4s;
-}
-
-.warning{
-  color:var(--danger);
-  font-weight:bold;
-}
-
-.categoryRow{
-  display:flex;
-  justify-content:space-between;
-  padding:10px 0;
-  border-bottom:1px solid var(--border);
-}
-
-.empty{
-  text-align:center;
-  color:var(--muted);
-  padding:25px 5px;
-}
-
-.actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.secondary{
-  background:#666;
-  color:white;
-}
-
-.dangerFull{
-  background:var(--danger);
-  color:white;
-}
-
-footer{
-  text-align:center;
-  color:var(--muted);
-  padding:20px;
-  font-size:13px;
-}
-
-@media(max-width:400px){
-  body{
-    padding:12px;
-  }
-
-  .total{
-    font-size:36px;
-  }
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#111">
+  <title>KharchBook 2.0</title>
+  <style>
+    :root{--bg:#f1f2f4;--card:#fff;--text:#151515;--muted:#707070;--line:#ddd;--black:#111;--green:#087f5b;--red:#c92a2a}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+    body.dark{--bg:#121212;--card:#1d1d1d;--text:#f5f5f5;--muted:#aaa;--line:#383838}
+    header{padding:18px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--bg);z-index:10}
+    .logo{font-size:28px;font-weight:800}
+    .sub{font-size:12px;color:var(--muted);margin-top:3px}
+    .moon{width:50px;height:50px;border:1px solid var(--line);border-radius:16px;background:var(--card);font-size:25px;cursor:pointer}
+    nav{display:flex;gap:8px;overflow:auto;padding:8px 18px 14px;position:sticky;top:76px;background:var(--bg);z-index:9}
+    nav button{white-space:nowrap;border:0;border-radius:15px;padding:13px 18px;background:#e5e6e9;color:var(--text);font-weight:700;font-size:16px;cursor:pointer}
+    body.dark nav button{background:#272727}
+    nav button.active{background:#111;color:#fff}
+    body.dark nav button.active{background:#fff;color:#111}
+    main{padding:0 18px 100px;max-width:900px;margin:auto}
+    .page{display:none}
+    .page.active{display:block}
+    .card,.stat{background:var(--card);border-radius:24px;padding:20px;margin:14px 0;box-shadow:0 2px 10px #00000008}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .stat{margin:0}
+    .stat small{color:var(--muted)}
+    .stat b{display:block;font-size:22px;margin-top:8px}
+    .green{color:var(--green)}
+    .red{color:var(--red)}
+    .muted{color:var(--muted)}
+    h2{margin:0 0 14px;font-size:23px}
+    h3{margin:0 0 10px}
+    .row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .list{border-top:1px solid var(--line)}
+    .item{padding:14px 0;border-bottom:1px solid var(--line)}
+    .pill{display:inline-block;padding:5px 9px;border-radius:99px;background:#eee;color:#555;font-size:12px}
+    body.dark .pill{background:#303030;color:#ccc}
+    button{border:0;border-radius:14px;padding:12px 16px;background:#111;color:#fff;font-weight:700;font-size:15px;cursor:pointer}
+    body.dark button{background:#eee;color:#111}
+    .secondary{background:#e8e8e8!important;color:#111!important}
+    body.dark .secondary{background:#303030!important;color:#fff!important}
+    .danger{background:#c92a2a!important;color:#fff!important}
+    .full{width:100%}
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+    .actions>*{flex:1}
+    input,select,textarea{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:13px;background:var(--card);color:var(--text);font-size:16px;margin:5px 0 10px}
+    textarea{min-height:80px}
+    label{font-size:13px;font-weight:700;color:var(--muted)}
+    .progress{height:12px;background:#e5e5e5;border-radius:99px;overflow:hidden;margin:8px 0}
+    .bar{height:100%;background:#111;width:0}
+    .searchbar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .empty{text-align:center;color:var(--muted);padding:25px}
+    .bottom{position:fixed;left:17px;right:17px;bottom:14px;z-index:20}
+    .bottom button{width:100%;font-size:18px;padding:17px;border-radius:20px}
+    .modal{position:fixed;inset:0;background:#0008;display:none;align-items:flex-end;justify-content:center;z-index:50}
+    .modal.show{display:flex}
+    .sheet{background:var(--card);color:var(--text);width:100%;max-width:650px;border-radius:25px 25px 0 0;padding:20px;max-height:90vh;overflow:auto}
+    .close{float:right;background:transparent!important;color:var(--text)!important;font-size:25px;padding:2px 8px;cursor:pointer}
+    hr{border:0;border-top:1px solid var(--line);margin:20px 0}
+    @media(min-width:700px){
+      .grid{grid-template-columns:repeat(4,1fr)}
+      .bottom{max-width:650px;left:50%;right:auto;transform:translateX(-50%);width:620px}
+    }
+  </style>
 </head>
-
 <body>
-
-<div class="app">
-
-  <div class="header">
-    <div class="logo">💰 KharchBook</div>
-    <button onclick="toggleDark()">🌙</button>
+<header>
+  <div>
+    <div class="logo">💰 KharchBook <span class="pill">2.0</span></div>
+    <div class="sub">Your money, your control • works offline</div>
   </div>
+  <button class="moon" onclick="dark()">🌙</button>
+</header>
 
+<nav>
+  <button class="active" data-p="home">🏠 Home</button>
+  <button data-p="history">📜 History</button>
+  <button data-p="tools">🧰 Tools</button>
+  <button data-p="goals">🎯 Goals</button>
+  <button data-p="settings">⚙️ Settings</button>
+</nav>
 
-  <!-- TOTAL -->
-  <div class="card totalBox">
-
-    <div class="small">Total Kharcha</div>
-
-    <div class="total">
-      ₹<span id="total">0</span>
+<main>
+  <section id="home" class="page active">
+    <div class="grid">
+      <div class="stat"><small>Balance</small><b id="bal">₹0</b></div>
+      <div class="stat"><small>Income</small><b id="inc" class="green">₹0</b></div>
+      <div class="stat"><small>Expense</small><b id="exp" class="red">₹0</b></div>
+      <div class="stat"><small>This Month</small><b id="mexp">₹0</b></div>
     </div>
-
-    <div class="small">
-      Is month: ₹<span id="monthTotal">0</span>
+    <div class="card">
+      <div class="row"><h2>📊 Monthly Budget</h2><b id="bt">₹0 / ₹0</b></div>
+      <div class="progress"><div id="bb" class="bar"></div></div>
+      <p id="bm" class="muted"></p>
     </div>
-
-  </div>
-
-
-  <!-- STATS -->
-  <div class="stats">
-
-    <div class="card stat">
-      <div class="small">Aaj ka Kharcha</div>
-      <b>₹<span id="todayTotal">0</span></b>
+    <div class="card">
+      <h2>💡 Smart Insight</h2>
+      <div id="ins">Add expenses to get an insight.</div>
     </div>
-
-    <div class="card stat">
-      <div class="small">Total Entries</div>
-      <b id="entryCount">0</b>
+    <div class="card">
+      <h2>🧾 Recent Transactions</h2>
+      <div id="recent"></div>
     </div>
+  </section>
 
-  </div>
-
-
-  <!-- BUDGET -->
-  <div class="card">
-
-    <h2>🎯 Monthly Budget</h2>
-
-    <input
-      id="budget"
-      type="number"
-      placeholder="Monthly budget ₹"
-      onchange="saveBudget()"
-    >
-
-    <div class="progress">
-      <div id="progressBar" class="progressBar"></div>
+  <section id="history" class="page">
+    <div class="card">
+      <h2>📜 Transaction History</h2>
+      <div class="searchbar">
+        <input id="q" placeholder="Search...">
+        <select id="ft">
+          <option value="">All types</option>
+          <option value="expense">Expense</option>
+          <option value="income">Income</option>
+        </select>
+      </div>
+      <div class="searchbar">
+        <select id="fc"><option value="">All categories</option></select>
+        <select id="fa"><option value="">All accounts</option></select>
+      </div>
+      <div id="hist"></div>
     </div>
+  </section>
 
-    <div class="small" id="budgetText">
-      Budget set nahi hai
+  <section id="tools" class="page">
+    <div class="card">
+      <h2>🔁 Recurring Payments</h2>
+      <button onclick="recForm()">＋ Add Recurring</button>
+      <div id="recs"></div>
     </div>
-
-  </div>
-
-
-  <!-- ADD EXPENSE -->
-  <div class="card">
-
-    <h2 id="formTitle">➕ Expense Add Karo</h2>
-
-    <input
-      id="name"
-      type="text"
-      placeholder="Kis cheez par kharch hua?"
-    >
-
-    <input
-      id="amount"
-      type="number"
-      placeholder="Amount ₹"
-    >
-
-    <select id="category">
-      <option value="Food">🍔 Food</option>
-      <option value="Petrol">⛽ Petrol</option>
-      <option value="Shopping">🛒 Shopping</option>
-      <option value="Bills">💡 Bills</option>
-      <option value="Travel">🚗 Travel</option>
-      <option value="Health">💊 Health</option>
-      <option value="Other">📦 Other</option>
-    </select>
-
-    <input
-      id="date"
-      type="date"
-    >
-
-    <button onclick="saveExpense()" id="saveBtn">
-      Add Expense
-    </button>
-
-    <button
-      onclick="cancelEdit()"
-      id="cancelBtn"
-      class="secondary"
-      style="display:none;"
-    >
-      Cancel Edit
-    </button>
-
-  </div>
-
-
-  <!-- SEARCH -->
-  <div class="card">
-
-    <h2>🔎 Expenses Search</h2>
-
-    <input
-      id="search"
-      type="text"
-      placeholder="Expense search karo..."
-      oninput="render()"
-    >
-
-    <select id="filterCategory" onchange="render()">
-      <option value="All">All Categories</option>
-      <option value="Food">🍔 Food</option>
-      <option value="Petrol">⛽ Petrol</option>
-      <option value="Shopping">🛒 Shopping</option>
-      <option value="Bills">💡 Bills</option>
-      <option value="Travel">🚗 Travel</option>
-      <option value="Health">💊 Health</option>
-      <option value="Other">📦 Other</option>
-    </select>
-
-  </div>
-
-
-  <!-- CATEGORY SUMMARY -->
-  <div class="card">
-
-    <h2>📊 Category Summary</h2>
-
-    <div id="categories"></div>
-
-  </div>
-
-
-  <!-- EXPENSE LIST -->
-  <div class="card">
-
-    <h2>📋 Expenses</h2>
-
-    <div id="expenses"></div>
-
-  </div>
-
-
-  <!-- ACTIONS -->
-  <div class="card">
-
-    <h2>⚙️ Data</h2>
-
-    <div class="actions">
-
-      <button
-        class="secondary"
-        onclick="exportCSV()"
-      >
-        📤 Export CSV
-      </button>
-
-      <button
-        class="dangerFull"
-        onclick="clearAll()"
-      >
-        🗑️ Clear All
-      </button>
-
+    <div class="card">
+      <h2>💳 Credit Cards</h2>
+      <button onclick="cardForm()">＋ Add Card</button>
+      <div id="cards"></div>
     </div>
+    <div class="card">
+      <h2>🧮 EMI Tracker</h2>
+      <button onclick="emiForm()">＋ Add EMI</button>
+      <div id="emis"></div>
+    </div>
+    <div class="card">
+      <h2>🔔 Upcoming Payments</h2>
+      <div id="up"></div>
+    </div>
+    <div class="card">
+      <h2>🏦 Accounts</h2>
+      <button onclick="accForm()">＋ Add Account</button>
+      <div id="accs"></div>
+    </div>
+    <div class="card">
+      <h2>💱 Currency</h2>
+      <select id="cur" onchange="DB.currency=this.value;save()">
+        <option value="INR">INR</option>
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="GBP">GBP</option>
+        <option value="AED">AED</option>
+      </select>
+    </div>
+  </section>
 
-  </div>
+  <section id="goals" class="page">
+    <div class="card">
+      <h2>🎯 Savings Goals</h2>
+      <button onclick="goalForm()">＋ Add Goal</button>
+      <div id="goals-list"></div>
+    </div>
+    <div class="card">
+      <h2>🔥 Savings Challenge</h2>
+      <div class="row">
+        <b id="challenge">₹0</b>
+        <button onclick="DB.challenge+=500;save();toast('Challenge +500 🔥')">＋ Add ₹500</button>
+      </div>
+    </div>
+  </section>
 
+  <section id="settings" class="page">
+    <div class="card">
+      <h2>⚙️ Settings</h2>
+      <label>Monthly Budget</label>
+      <input id="budget" type="number">
+      <button onclick="DB.budget=+budget.value||0;save();toast('Budget saved ✅')">Save Budget</button>
+      <hr>
+      <h3>🔐 PIN Lock</h3>
+      <input id="pin" inputmode="numeric" maxlength="6" placeholder="4-6 digit PIN">
+      <div class="actions">
+        <button onclick="setPin()">Save PIN</button>
+        <button class="secondary" onclick="DB.pin='';save();pin.value='';toast('PIN removed')">Remove PIN</button>
+      </div>
+      <hr>
+      <h3>💾 Backup & Restore</h3>
+      <div class="actions">
+        <button onclick="backup()">Backup JSON</button>
+        <button class="secondary" onclick="file.click()">Restore JSON</button>
+        <button onclick="csv()">Export CSV</button>
+      </div>
+      <input id="file" type="file" accept=".json" hidden onchange="restore(this)">
+      <hr>
+      <button onclick="trashForm()">🗑️ Open Trash</button>
+      <hr>
+      <button class="danger full" onclick="wipe()">Delete ALL local data</button>
+    </div>
+  </section>
+</main>
 
-  <footer>
-    KharchBook • Your Personal Expense Tracker
-  </footer>
-
-</div>
-
+<div class="bottom"><button onclick="txForm()">＋ Add Transaction</button></div>
+<div id="modal" class="modal"><div class="sheet"><button class="close" onclick="closeM()">×</button><div id="mb"></div></div></div>
+<div id="toast" style="position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#111;color:#fff;padding:12px 18px;border-radius:99px;display:none;z-index:99"></div>
 
 <script>
+const K = 'kharchbook_2_0_v3';
+let DB = JSON.parse(localStorage.getItem(K) || 'null') || {
+  transactions: [],
+  accounts: [{ id: uid(), name: 'Cash', balance: 0 }],
+  recurring: [],
+  cards: [],
+  emis: [],
+  goals: [],
+  trash: [],
+  budget: 0,
+  currency: 'INR',
+  dark: false,
+  challenge: 0,
+  pin: ''
+};
 
-let expenses =
-  JSON.parse(localStorage.getItem("kharchbook_expenses")) || [];
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
+function save() { localStorage.setItem(K, JSON.stringify(DB)); render(); }
+function closeM() { modal.classList.remove('show'); }
+function toast(x) {
+  const toastEl = document.getElementById('toast');
+  toastEl.textContent = x;
+  toastEl.style.display = 'block';
+  clearTimeout(window.xx);
+  window.xx = setTimeout(() => toastEl.style.display = 'none', 2000);
+}
+function money(n) {
+  return ({ INR: '₹', USD: '$', EUR: '€', GBP: '£', AED: 'د.إ' }[DB.currency] || '₹') + Number(n || 0).toLocaleString('en-IN', { maximumFractionDigits: 2 });
+}
+function esc(s) {
+  return String(s ?? '').replace(/[&<>'"]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[m]));
+}
+function td() { return new Date().toISOString().slice(0, 10); }
+function fd(x) { return x ? new Date(x + 'T00:00').toLocaleDateString('en-IN') : ''; }
+function openM(t, b) { mb.innerHTML = '<h2>' + t + '</h2>' + b; modal.classList.add('show'); }
 
-let budget =
-  Number(localStorage.getItem("kharchbook_budget")) || 0;
-
-let editIndex = -1;
-
-
-/* TODAY DATE */
-
-function todayDate(){
-
-  let d = new Date();
-
-  let month = String(d.getMonth()+1).padStart(2,"0");
-
-  let day = String(d.getDate()).padStart(2,"0");
-
-  return d.getFullYear() + "-" + month + "-" + day;
+function dark() {
+  DB.dark = !DB.dark;
+  document.body.classList.toggle('dark', DB.dark);
+  save();
 }
 
-
-/* INITIAL LOAD */
-
-document.getElementById("date").value = todayDate();
-
-document.getElementById("budget").value =
-  budget || "";
-
-render();
-
-
-/* SAVE EXPENSE */
-
-function saveExpense(){
-
-  let name =
-    document.getElementById("name").value.trim();
-
-  let amount =
-    Number(document.getElementById("amount").value);
-
-  let category =
-    document.getElementById("category").value;
-
-  let date =
-    document.getElementById("date").value;
-
-
-  if(name === ""){
-    alert("Expense ka naam likho!");
-    return;
-  }
-
-  if(amount <= 0){
-    alert("Sahi amount enter karo!");
-    return;
-  }
-
-  if(date === ""){
-    alert("Date select karo!");
-    return;
-  }
-
-
-  let data = {
-    name:name,
-    amount:amount,
-    category:category,
-    date:date
-  };
-
-
-  if(editIndex === -1){
-
-    expenses.push(data);
-
-  }else{
-
-    expenses[editIndex] = data;
-
-    editIndex = -1;
-
-    document.getElementById("formTitle").textContent =
-      "➕ Expense Add Karo";
-
-    document.getElementById("saveBtn").textContent =
-      "Add Expense";
-
-    document.getElementById("cancelBtn").style.display =
-      "none";
-  }
-
-
-  saveData();
-
-  clearForm();
-
+document.querySelectorAll('nav button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('nav button').forEach(x => x.classList.remove('active'));
+  b.classList.add('active');
+  document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
+  document.getElementById(b.dataset.p).classList.add('active');
   render();
+});
+
+function txForm(edit = '') {
+  let t = DB.transactions.find(x => x.id === edit) || {},
+    cats = ['Food', 'Travel', 'Shopping', 'Bills', 'Rent', 'EMI', 'Health', 'Education', 'Entertainment', 'Salary', 'Business', 'Other'];
+  openM(edit ? '✏️ Edit Transaction' : '➕ Add Transaction', `
+    <label>Type</label>
+    <select id="ty">
+      <option value="expense" ${t.type === 'expense' ? 'selected' : ''}>Expense</option>
+      <option value="income" ${t.type === 'income' ? 'selected' : ''}>Income</option>
+    </select>
+    <label>Amount *</label><input id="amt" type="number" value="${t.amount || ''}">
+    <label>Title *</label><input id="title" value="${esc(t.title || '')}" placeholder="Grocery / Salary">
+    <label>Category</label><select id="cat">${cats.map(c => '<option ' + (t.category === c ? 'selected' : '') + '>' + c + '</option>').join('')}</select>
+    <label>Account</label><select id="account">${DB.accounts.map(a => '<option value="' + a.id + '" ' + (t.accountId === a.id ? 'selected' : '') + '>' + esc(a.name) + '</option>').join('')}</select>
+    <label>Date</label><input id="date" type="date" value="${t.date || td()}">
+    <label>Notes</label><textarea id="notes">${esc(t.notes || '')}</textarea>
+    <label>Receipt photo</label><input id="receipt" type="file" accept="image/*">
+    <div class="actions">
+      <button onclick="saveTx('${edit}')">Save</button>
+      <button class="secondary" onclick="closeM()">Cancel</button>
+    </div>
+  `);
 }
 
-
-/* CLEAR FORM */
-
-function clearForm(){
-
-  document.getElementById("name").value = "";
-
-  document.getElementById("amount").value = "";
-
-  document.getElementById("category").value = "Food";
-
-  document.getElementById("date").value = todayDate();
-}
-
-
-/* EDIT */
-
-function editExpense(index){
-
-  let e = expenses[index];
-
-  document.getElementById("name").value =
-    e.name;
-
-  document.getElementById("amount").value =
-    e.amount;
-
-  document.getElementById("category").value =
-    e.category;
-
-  document.getElementById("date").value =
-    e.date;
-
-  editIndex = index;
-
-  document.getElementById("formTitle").textContent =
-    "✏️ Expense Edit Karo";
-
-  document.getElementById("saveBtn").textContent =
-    "Update Expense";
-
-  document.getElementById("cancelBtn").style.display =
-    "block";
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-}
-
-
-/* CANCEL EDIT */
-
-function cancelEdit(){
-
-  editIndex = -1;
-
-  clearForm();
-
-  document.getElementById("formTitle").textContent =
-    "➕ Expense Add Karo";
-
-  document.getElementById("saveBtn").textContent =
-    "Add Expense";
-
-  document.getElementById("cancelBtn").style.display =
-    "none";
-}
-
-
-/* DELETE */
-
-function deleteExpense(index){
-
-  if(confirm("Ye expense delete karna hai?")){
-
-    expenses.splice(index,1);
-
-    saveData();
-
-    render();
+function saveTx(edit) {
+  let amt = +document.getElementById('amt').value,
+    title = document.getElementById('title').value.trim(),
+    old = DB.transactions.find(x => x.id === edit),
+    f = document.getElementById('receipt').files[0];
+  if (!amt || !title) return toast('Amount aur title bharna hai');
+  function done(pic) {
+    let t = {
+      id: edit || uid(),
+      type: ty.value,
+      amount: amt,
+      title,
+      category: cat.value,
+      accountId: account.value,
+      date: date.value,
+      notes: notes.value.trim(),
+      receipt: pic !== undefined ? pic : (old?.receipt || '')
+    };
+    if (old) Object.assign(old, t);
+    else DB.transactions.unshift(t);
+    closeM();
+    save();
+    toast('Transaction saved ✅');
   }
+  if (f) {
+    let r = new FileReader();
+    r.onload = () => done(r.result);
+    r.readAsDataURL(f);
+  } else done();
 }
 
-
-/* SAVE DATA */
-
-function saveData(){
-
-  localStorage.setItem(
-    "kharchbook_expenses",
-    JSON.stringify(expenses)
-  );
+function delTx(i) {
+  if (!confirm('Trash me bhejna hai?')) return;
+  let t = DB.transactions.find(x => x.id === i);
+  DB.trash.push({ kind: 'transactions', data: t });
+  DB.transactions = DB.transactions.filter(x => x.id !== i);
+  save();
 }
 
-
-/* SAVE BUDGET */
-
-function saveBudget(){
-
-  budget =
-    Number(document.getElementById("budget").value) || 0;
-
-  localStorage.setItem(
-    "kharchbook_budget",
-    budget
-  );
-
-  render();
+function renderHome() {
+  let I = DB.transactions.filter(t => t.type === 'income').reduce((a, t) => a + t.amount, 0),
+    E = DB.transactions.filter(t => t.type === 'expense').reduce((a, t) => a + t.amount, 0),
+    m = new Date().toISOString().slice(0, 7),
+    ME = DB.transactions.filter(t => t.type === 'expense' && t.date.startsWith(m)).reduce((a, t) => a + t.amount, 0);
+  bal.textContent = money(I - E);
+  inc.textContent = money(I);
+  exp.textContent = money(E);
+  mexp.textContent = money(ME);
+  bt.textContent = money(ME) + ' / ' + money(DB.budget);
+  bb.style.width = (DB.budget ? Math.min(100, ME / DB.budget * 100) : 0) + '%';
+  bm.textContent = DB.budget ? (ME > DB.budget ? '⚠️ Budget crossed' : ME > DB.budget * .8 ? '⚠️ 80%+ budget used' : '👍 Budget under control') : 'Budget set karo';
+  let z = {};
+  DB.transactions.filter(t => t.type === 'expense').forEach(t => z[t.category] = (z[t.category] || 0) + t.amount);
+  let top = Object.entries(z).sort((a, b) => b[1] - a[1])[0];
+  ins.textContent = top ? 'Sabse zyada spending ' + top[0] + ' par: ' + money(top[1]) : 'Add expenses to get an insight.';
+  recent.innerHTML = DB.transactions.slice(0, 6).map(t => `
+    <div class="item row">
+      <span><b>${esc(t.title)}</b><br><small class="muted">${fd(t.date)} • ${esc(t.category)}</small></span>
+      <b class="${t.type === 'income' ? 'green' : 'red'}">${t.type === 'income' ? '+' : '-'}${money(t.amount)}</b>
+    </div>
+  `).join('') || '<div class="empty">No transactions.</div>';
 }
 
-
-/* RENDER EVERYTHING */
-
-function render(){
-
-  let total = 0;
-
-  let monthTotal = 0;
-
-  let todayTotal = 0;
-
-  let today = todayDate();
-
-  let now = new Date();
-
-  let currentMonth =
-    now.getFullYear() + "-" +
-    String(now.getMonth()+1).padStart(2,"0");
-
-
-  expenses.forEach(function(e){
-
-    total += e.amount;
-
-    if(e.date.startsWith(currentMonth)){
-      monthTotal += e.amount;
-    }
-
-    if(e.date === today){
-      todayTotal += e.amount;
-    }
-
-  });
-
-
-  document.getElementById("total").textContent =
-    total.toLocaleString("en-IN");
-
-  document.getElementById("monthTotal").textContent =
-    monthTotal.toLocaleString("en-IN");
-
-  document.getElementById("todayTotal").textContent =
-    todayTotal.toLocaleString("en-IN");
-
-  document.getElementById("entryCount").textContent =
-    expenses.length;
-
-
-  renderBudget(monthTotal);
-
-  renderCategories();
-
-  renderExpenses();
-
+function populateFilters() {
+  const currentC = fc.value;
+  const currentA = fa.value;
+  fc.innerHTML = '<option value="">All categories</option>' + [...new Set(DB.transactions.map(t => t.category))].map(x => `<option value="${esc(x)}" ${currentC===x?'selected':''}>${esc(x)}</option>`).join('');
+  fa.innerHTML = '<option value="">All accounts</option>' + DB.accounts.map(a => `<option value="${a.id}" ${currentA===a.id?'selected':''}>${esc(a.name)}</option>`).join('');
 }
 
-
-/* BUDGET */
-
-function renderBudget(monthTotal){
-
-  let bar =
-    document.getElementById("progressBar");
-
-  let text =
-    document.getElementById("budgetText");
-
-
-  if(budget <= 0){
-
-    bar.style.width = "0%";
-
-    text.textContent =
-      "Budget set nahi hai";
-
-    text.className = "small";
-
-    return;
-  }
-
-
-  let percent =
-    Math.min((monthTotal / budget) * 100,100);
-
-  bar.style.width =
-    percent + "%";
-
-
-  let remaining =
-    budget - monthTotal;
-
-
-  if(remaining >= 0){
-
-    text.textContent =
-      "₹" +
-      remaining.toLocaleString("en-IN") +
-      " budget baki hai (" +
-      Math.round(percent) +
-      "% used)";
-
-    text.className = "small";
-
-  }else{
-
-    text.textContent =
-      "⚠️ Budget ₹" +
-      Math.abs(remaining).toLocaleString("en-IN") +
-      " se cross ho gaya!";
-
-    text.className = "warning";
-  }
-
+function renderHist() {
+  let q = (document.getElementById('q').value || '').toLowerCase(),
+    T = ft.value,
+    C = fc.value,
+    A = fa.value,
+    a = DB.transactions.filter(t => (!q || (t.title + ' ' + t.category + ' ' + t.notes).toLowerCase().includes(q)) && (!T || t.type === T) && (!C || t.category === C) && (!A || t.accountId === A));
+  hist.innerHTML = a.map(t => `
+    <div class="item">
+      <div class="row">
+        <span><b>${esc(t.title)}</b><br><small class="muted">${esc(t.category)} • ${fd(t.date)} • ${esc(DB.accounts.find(x => x.id === t.accountId)?.name || '')}</small></span>
+        <b class="${t.type === 'income' ? 'green' : 'red'}">${t.type === 'income' ? '+' : '-'}${money(t.amount)}</b>
+      </div>
+      <div class="actions" style="margin-top:8px">
+        <button class="secondary" onclick="txForm('${t.id}')">Edit</button>
+        <button class="danger" onclick="delTx('${t.id}')">Trash</button>
+        ${t.receipt ? `<button class="secondary" onclick="viewReceipt('${t.id}')">Receipt</button>` : ''}
+      </div>
+    </div>
+  `).join('') || '<div class="empty">No results.</div>';
 }
 
-
-/* CATEGORY SUMMARY */
-
-function renderCategories(){
-
-  let box =
-    document.getElementById("categories");
-
-  let totals = {};
-
-  expenses.forEach(function(e){
-
-    if(!totals[e.category]){
-      totals[e.category] = 0;
-    }
-
-    totals[e.category] += e.amount;
-
-  });
-
-
-  let keys =
-    Object.keys(totals);
-
-
-  if(keys.length === 0){
-
-    box.innerHTML =
-      '<div class="empty">Abhi data nahi hai</div>';
-
-    return;
-  }
-
-
-  keys.sort(function(a,b){
-
-    return totals[b] - totals[a];
-
-  });
-
-
-  box.innerHTML = "";
-
-
-  keys.forEach(function(category){
-
-    let row =
-      document.createElement("div");
-
-    row.className =
-      "categoryRow";
-
-    row.innerHTML =
-      "<span>" +
-      category +
-      "</span>" +
-
-      "<b>₹" +
-      totals[category].toLocaleString("en-IN") +
-      "</b>";
-
-    box.appendChild(row);
-
-  });
-
+function viewReceipt(id) {
+  let t = DB.transactions.find(x => x.id === id);
+  if (t && t.receipt) openM('🧾 Receipt', `<img src="${t.receipt}" style="width:100%;border-radius:12px;">`);
 }
 
+[q, ft, fc, fa].forEach(e => e.addEventListener('input', () => renderHist()));
 
-/* EXPENSE LIST */
-
-function renderExpenses(){
-
-  let box =
-    document.getElementById("expenses");
-
-  let search =
-    document.getElementById("search").value
-    .toLowerCase();
-
-  let filter =
-    document.getElementById("filterCategory").value;
-
-
-  let list =
-    expenses.filter(function(e){
-
-      let matchSearch =
-        e.name.toLowerCase().includes(search);
-
-      let matchCategory =
-        filter === "All" ||
-        e.category === filter;
-
-      return matchSearch && matchCategory;
-
-    });
-
-
-  list.sort(function(a,b){
-
-    return b.date.localeCompare(a.date);
-
-  });
-
-
-  if(list.length === 0){
-
-    box.innerHTML =
-      '<div class="empty">Koi expense nahi mila 😌</div>';
-
-    return;
-  }
-
-
-  box.innerHTML = "";
-
-
-  list.forEach(function(e){
-
-    let realIndex =
-      expenses.indexOf(e);
-
-
-    let div =
-      document.createElement("div");
-
-    div.className =
-      "expense";
-
-
-    div.innerHTML =
-
-      "<div>" +
-
-      "<div class='expenseName'>" +
-      e.name +
-      "</div>" +
-
-      "<div class='expenseInfo'>" +
-      e.category +
-      " • " +
-      formatDate(e.date) +
-      "</div>" +
-
-      "</div>" +
-
-
-      "<div class='expenseRight'>" +
-
-      "<div class='amount'>" +
-      "₹" +
-      e.amount.toLocaleString("en-IN") +
-      "</div>" +
-
-      "<button class='editBtn' " +
-      "onclick='editExpense(" +
-      realIndex +
-      ")'>Edit</button>" +
-
-      "<button class='deleteBtn' " +
-      "onclick='deleteExpense(" +
-      realIndex +
-      ")'>Delete</button>" +
-
-      "</div>";
-
-
-    box.appendChild(div);
-
-  });
-
+function accForm() {
+  openM('🏦 Add Account', '<label>Name</label><input id="an" placeholder="Bank / UPI / Wallet"><label>Opening Balance</label><input id="ab" type="number" value="0"><button onclick="addAcc()">Save</button>');
+}
+function addAcc() {
+  if (!an.value.trim()) return toast('Account name chahiye');
+  DB.accounts.push({ id: uid(), name: an.value.trim(), balance: +ab.value || 0 });
+  closeM();
+  save();
 }
 
-
-/* FORMAT DATE */
-
-function formatDate(date){
-
-  let parts =
-    date.split("-");
-
-  return parts[2] + "/" +
-         parts[1] + "/" +
-         parts[0];
-
+function recForm() {
+  openM('🔁 Add Recurring', '<label>Name</label><input id="rn" placeholder="HDFC"><label>Amount</label><input id="ra" type="number"><label>Frequency</label><select id="rf"><option>Monthly</option><option>Weekly</option><option>Yearly</option></select><label>Next Date</label><input id="rd" type="date" value="' + td() + '"><button onclick="addRec()">Save</button>');
+}
+function addRec() {
+  if (!rn.value || !+ra.value) return toast('Details bhar');
+  DB.recurring.push({ id: uid(), name: rn.value, amount: +ra.value, frequency: rf.value, date: rd.value });
+  closeM();
+  save();
 }
 
-
-/* DARK MODE */
-
-function toggleDark(){
-
-  document.body.classList.toggle("dark");
-
-  localStorage.setItem(
-    "kharchbook_dark",
-    document.body.classList.contains("dark")
-  );
-
+function cardForm() {
+  openM('💳 Add Card', '<label>Card Name</label><input id="cn"><label>Limit</label><input id="cl" type="number"><label>Used</label><input id="cu" type="number" value="0"><label>Due Date</label><input id="cd" type="date" value="' + td() + '"><button onclick="addCard()">Save</button>');
+}
+function addCard() {
+  if (!cn.value || !+cl.value) return toast('Details bhar');
+  DB.cards.push({ id: uid(), name: cn.value, limit: +cl.value, used: +cu.value || 0, date: cd.value });
+  closeM();
+  save();
 }
 
-
-/* LOAD DARK MODE */
-
-if(
-  localStorage.getItem("kharchbook_dark") === "true"
-){
-
-  document.body.classList.add("dark");
-
+function emiForm() {
+  openM('🧮 Add EMI', '<label>Name</label><input id="en"><label>Monthly EMI</label><input id="ea" type="number"><label>Months Left</label><input id="em" type="number"><label>Next Date</label><input id="ed" type="date" value="' + td() + '"><button onclick="addEMI()">Save</button>');
+}
+function addEMI() {
+  if (!en.value || !+ea.value) return toast('Details bhar');
+  DB.emis.push({ id: uid(), name: en.value, amount: +ea.value, months: +em.value || 0, date: ed.value });
+  closeM();
+  save();
 }
 
+function goalForm() {
+  openM('🎯 Add Goal', '<label>Goal Name</label><input id="goal_name_input" placeholder="e.g. Phone"><label>Target Amount</label><input id="goal_target_input" type="number" min="1" placeholder="20000"><label>Already Saved</label><input id="goal_saved_input" type="number" min="0" value="0"><label>Deadline</label><input id="goal_date_input" type="date"><div class="actions"><button type="button" onclick="createGoal()">Save Goal</button><button type="button" class="secondary" onclick="closeM()">Cancel</button></div>');
+}
+function createGoal() {
+  const name = document.getElementById('goal_name_input').value.trim();
+  const target = Number(document.getElementById('goal_target_input').value);
+  const saved = Number(document.getElementById('goal_saved_input').value) || 0;
+  const date = document.getElementById('goal_date_input').value;
+  if (!name) return toast('Goal name bharna hai');
+  if (!Number.isFinite(target) || target <= 0) return toast('Target amount bharna hai');
+  if (saved < 0 || saved > target) return toast('Saved amount target se zyada nahi ho sakta');
+  if (!Array.isArray(DB.goals)) DB.goals = [];
+  DB.goals.unshift({ id: uid(), name, target, saved, date });
+  closeM();
+  save();
+  toast('Goal saved ✅');
+}
 
-/* EXPORT CSV */
+function addGoalAmount(i) {
+  const g = DB.goals.find(x => x.id === i);
+  if (!g) return;
+  const n = Number(prompt('Kitna amount add karna hai?', 500));
+  if (!Number.isFinite(n) || n <= 0) return;
+  if (g.saved + n > g.target) return toast('Target se zyada save nahi kar sakte');
+  g.saved += n;
+  save();
+  toast('Goal updated ✅');
+}
 
-function exportCSV(){
+function remove(kind, i) {
+  if (!confirm('Delete?')) return;
+  let x = DB[kind].find(a => a.id === i);
+  DB.trash.push({ kind, data: x });
+  DB[kind] = DB[kind].filter(a => a.id !== i);
+  save();
+}
 
-  if(expenses.length === 0){
+function renderTools() {
+  recs.innerHTML = DB.recurring.map(x => `
+    <div class="item row">
+      <span>🔁 ${esc(x.name)}<br><small class="muted">${x.frequency} • ${fd(x.date)}</small></span>
+      <span><b>${money(x.amount)}</b><br><button class="danger" onclick="remove('recurring','${x.id}')">Delete</button></span>
+    </div>
+  `).join('') || '<div class="empty">No recurring payments.</div>';
 
-    alert("Export karne ke liye expense nahi hai!");
+  cards.innerHTML = DB.cards.map(x => `
+    <div class="item row">
+      <span>💳 ${esc(x.name)}<br><small class="muted">Due ${fd(x.date)} • Used ${money(x.used)}</small></span>
+      <span><b>Limit ${money(x.limit)}</b><br><button class="danger" onclick="remove('cards','${x.id}')">Delete</button></span>
+    </div>
+  `).join('') || '<div class="empty">No cards.</div>';
 
-    return;
-  }
+  emis.innerHTML = DB.emis.map(x => `
+    <div class="item row">
+      <span>🧮 ${esc(x.name)}<br><small class="muted">${x.months} months left • ${fd(x.date)}</small></span>
+      <span><b>${money(x.amount)}</b><br><button class="danger" onclick="remove('emis','${x.id}')">Delete</button></span>
+    </div>
+  `).join('') || '<div class="empty">No EMIs.</div>';
 
+  accs.innerHTML = DB.accounts.map(a => {
+    let n = DB.transactions.filter(t => t.accountId === a.id).reduce((s, t) => s + (t.type === 'income' ? t.amount : -t.amount), 0);
+    return `<div class="item row"><span>🏦 ${esc(a.name)}</span><b>${money(a.balance + n)}</b></div>`;
+  }).join('');
 
-  let csv =
-    "Name,Amount,Category,Date\n";
+  let u = [
+    ...DB.emis.map(x => ({ n: x.name, d: x.date, a: x.amount, k: '🧮 EMI' })),
+    ...DB.cards.map(x => ({ n: x.name, d: x.date, a: x.used, k: '💳 Card' })),
+    ...DB.recurring.map(x => ({ n: x.name, d: x.date, a: x.amount, k: '🔔 Recurring' }))
+  ].sort((a, b) => (a.d || '').localeCompare(b.d || '')).slice(0, 8);
 
+  up.innerHTML = u.map(x => `
+    <div class="item row">
+      <span>${x.k} ${esc(x.n)}<br><small class="muted">${fd(x.d)}</small></span>
+      <b>${money(x.a)}</b>
+    </div>
+  `).join('') || '<div class="empty">No upcoming payments.</div>';
+}
 
-  expenses.forEach(function(e){
+function renderGoals() {
+  const container = document.getElementById('goals-list');
+  challenge.textContent = money(DB.challenge || 0);
+  container.innerHTML = DB.goals.map(g => {
+    let p = Math.min(100, Math.round((g.saved / g.target) * 100));
+    return `
+      <div class="item">
+        <div class="row">
+          <span><b>${esc(g.name)}</b><br><small class="muted">${fd(g.date) || 'No deadline'}</small></span>
+          <b>${money(g.saved)} / ${money(g.target)} (${p}%)</b>
+        </div>
+        <div class="progress"><div class="bar" style="width:${p}%"></div></div>
+        <div class="actions">
+          <button class="secondary" onclick="addGoalAmount('${g.id}')">＋ Add Money</button>
+          <button class="danger" onclick="remove('goals','${g.id}')">Delete</button>
+        </div>
+      </div>
+    `;
+  }).join('') || '<div class="empty">No goals added yet.</div>';
+}
 
-    csv +=
-      '"' + e.name.replace(/"/g,'""') + '",' +
-      e.amount + ',' +
-      '"' + e.category + '",' +
-      e.date + '\n';
+function setPin() {
+  if (!pin.value || pin.value.length < 4) return toast('Kam se kam 4 digit PIN enter karein');
+  DB.pin = pin.value;
+  save();
+  toast('PIN Lock Saved 🔐');
+}
 
-  });
-
-
-  let blob =
-    new Blob([csv],{
-      type:"text/csv"
-    });
-
-
-  let url =
-    URL.createObjectURL(blob);
-
-
-  let a =
-    document.createElement("a");
-
-  a.href = url;
-
-  a.download =
-    "kharchbook-expenses.csv";
-
+function backup() {
+  const blob = new Blob([JSON.stringify(DB, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `kharchbook_backup_${td()}.json`;
   a.click();
-
-  URL.revokeObjectURL(url);
-
 }
 
-
-/* CLEAR ALL */
-
-function clearAll(){
-
-  if(expenses.length === 0){
-
-    alert("Data already empty hai!");
-
-    return;
-  }
-
-
-  if(
-    confirm(
-      "Saare expenses delete ho jayenge. Continue?"
-    )
-  ){
-
-    expenses = [];
-
-    saveData();
-
-    render();
-
-  }
-
+function restore(elem) {
+  const file = elem.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      DB = JSON.parse(e.target.result);
+      save();
+      toast('Backup restored successfully ✅');
+    } catch (err) {
+      toast('Invalid JSON backup file');
+    }
+  };
+  reader.readAsText(file);
 }
 
+function csv() {
+  if (!DB.transactions.length) return toast('No transactions to export');
+  let rows = [['Date', 'Type', 'Category', 'Title', 'Amount', 'Account', 'Notes']];
+  DB.transactions.forEach(t => {
+    let accName = DB.accounts.find(a => a.id === t.accountId)?.name || '';
+    rows.push([t.date, t.type, t.category, t.title, t.amount, accName, t.notes]);
+  });
+  let csvContent = 'data:text/csv;charset=utf-8,' + rows.map(e => e.map(x => `"${String(x||'').replace(/"/g, '""')}"`).join(',')).join('\n');
+  let a = document.createElement('a');
+  a.href = encodeURI(csvContent);
+  a.download = `transactions_${td()}.csv`;
+  a.click();
+}
+
+function trashForm() {
+  openM('🗑️ Trash Bin', DB.trash.map((item, idx) => `
+    <div class="item row">
+      <span><b>[${item.kind}]</b> ${esc(item.data?.title || item.data?.name || 'Item')}</span>
+      <button class="secondary" onclick="restoreTrash(${idx})">Restore</button>
+    </div>
+  `).join('') || '<div class="empty">Trash is empty</div>');
+}
+
+function restoreTrash(idx) {
+  let item = DB.trash[idx];
+  if (!item) return;
+  DB[item.kind].unshift(item.data);
+  DB.trash.splice(idx, 1);
+  closeM();
+  save();
+  toast('Item Restored ✅');
+}
+
+function wipe() {
+  if (!confirm('Kya aap sach me poora data delete karna chahte hain?')) return;
+  localStorage.removeItem(K);
+  location.reload();
+}
+
+function render() {
+  document.body.classList.toggle('dark', !!DB.dark);
+  if (document.getElementById('cur')) document.getElementById('cur').value = DB.currency || 'INR';
+  if (document.getElementById('budget')) document.getElementById('budget').value = DB.budget || '';
+  if (document.getElementById('pin')) document.getElementById('pin').value = DB.pin || '';
+  
+  renderHome();
+  populateFilters();
+  renderHist();
+  renderTools();
+  renderGoals();
+}
+
+// Initial render
+render();
 </script>
-
 </body>
-  </html>
+</html>

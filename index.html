@@ -4,72 +4,67 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#111">
+  <link rel="manifest" href="manifest.json">
   <title>KharchBook 2.0</title>
   <style>
-    :root{--bg:#f1f2f4;--card:#fff;--text:#151515;--muted:#707070;--line:#ddd;--black:#111;--green:#087f5b;--red:#c92a2a}
-    *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+    :root{--bg:#f1f2f4;--card:#fff;--text:#151515;--muted:#707070;--line:#ddd;--green:#087f5b;--red:#c92a2a;--yellow:#d97706}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
     body.dark{--bg:#121212;--card:#1d1d1d;--text:#f5f5f5;--muted:#aaa;--line:#383838}
-    header{padding:18px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--bg);z-index:10}
-    .logo{font-size:28px;font-weight:800}
-    .sub{font-size:12px;color:var(--muted);margin-top:3px}
-    .moon{width:50px;height:50px;border:1px solid var(--line);border-radius:16px;background:var(--card);font-size:25px;cursor:pointer}
-    nav{display:flex;gap:8px;overflow:auto;padding:8px 18px 14px;position:sticky;top:76px;background:var(--bg);z-index:9}
-    nav button{white-space:nowrap;border:0;border-radius:15px;padding:13px 18px;background:#e5e6e9;color:var(--text);font-weight:700;font-size:16px;cursor:pointer}
-    body.dark nav button{background:#272727}
-    nav button.active{background:#111;color:#fff}
-    body.dark nav button.active{background:#fff;color:#111}
-    main{padding:0 18px 100px;max-width:900px;margin:auto}
-    .page{display:none}
-    .page.active{display:block}
-    .card,.stat{background:var(--card);border-radius:24px;padding:20px;margin:14px 0;box-shadow:0 2px 10px #00000008}
-    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-    .stat{margin:0}
-    .stat small{color:var(--muted)}
-    .stat b{display:block;font-size:22px;margin-top:8px}
-    .green{color:var(--green)}
-    .red{color:var(--red)}
-    .muted{color:var(--muted)}
-    h2{margin:0 0 14px;font-size:23px}
-    h3{margin:0 0 10px}
-    .row{display:flex;justify-content:space-between;align-items:center;gap:10px}
-    .list{border-top:1px solid var(--line)}
-    .item{padding:14px 0;border-bottom:1px solid var(--line)}
-    .pill{display:inline-block;padding:5px 9px;border-radius:99px;background:#eee;color:#555;font-size:12px}
-    body.dark .pill{background:#303030;color:#ccc}
-    button{border:0;border-radius:14px;padding:12px 16px;background:#111;color:#fff;font-weight:700;font-size:15px;cursor:pointer}
-    body.dark button{background:#eee;color:#111}
-    .secondary{background:#e8e8e8!important;color:#111!important}
-    body.dark .secondary{background:#303030!important;color:#fff!important}
-    .danger{background:#c92a2a!important;color:#fff!important}
-    .full{width:100%}
-    .actions{display:flex;gap:8px;flex-wrap:wrap}
-    .actions>*{flex:1}
-    input,select,textarea{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:13px;background:var(--card);color:var(--text);font-size:16px;margin:5px 0 10px}
-    textarea{min-height:80px}
-    label{font-size:13px;font-weight:700;color:var(--muted)}
-    .progress{height:12px;background:#e5e5e5;border-radius:99px;overflow:hidden;margin:8px 0}
-    .bar{height:100%;background:#111;width:0}
-    .searchbar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-    .empty{text-align:center;color:var(--muted);padding:25px}
-    .bottom{position:fixed;left:17px;right:17px;bottom:14px;z-index:20}
-    .bottom button{width:100%;font-size:18px;padding:17px;border-radius:20px}
-    .modal{position:fixed;inset:0;background:#0008;display:none;align-items:flex-end;justify-content:center;z-index:50}
-    .modal.show{display:flex}
-    .sheet{background:var(--card);color:var(--text);width:100%;max-width:650px;border-radius:25px 25px 0 0;padding:20px;max-height:90vh;overflow:auto}
-    .close{float:right;background:transparent!important;color:var(--text)!important;font-size:25px;padding:2px 8px;cursor:pointer}
-    hr{border:0;border-top:1px solid var(--line);margin:20px 0}
-    @media(min-width:700px){
-      .grid{grid-template-columns:repeat(4,1fr)}
-      .bottom{max-width:650px;left:50%;right:auto;transform:translateX(-50%);width:620px}
-    }
+    header{padding:16px 18px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--bg);z-index:10}
+    .logo{font-size:24px;font-weight:800}.sub{font-size:12px;color:var(--muted);margin-top:2px}
+    .moon{width:44px;height:44px;border:1px solid var(--line);border-radius:14px;background:var(--card);font-size:20px;cursor:pointer}
+    nav{display:flex;gap:8px;overflow-x:auto;padding:6px 18px 12px;position:sticky;top:70px;background:var(--bg);z-index:9}
+    nav button{white-space:nowrap;border:0;border-radius:14px;padding:10px 16px;background:#e5e6e9;color:var(--text);font-weight:700;font-size:14px;cursor:pointer}
+    body.dark nav button{background:#272727}nav button.active{background:#111;color:#fff}body.dark nav button.active{background:#fff;color:#111}
+    main{padding:0 18px 100px;max-width:850px;margin:auto}.page{display:none}.page.active{display:block}
+    .card,.stat{background:var(--card);border-radius:20px;padding:18px;margin:12px 0;box-shadow:0 2px 8px #00000008}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{margin:0}.stat small{color:var(--muted);font-size:12px}
+    .stat b{display:block;font-size:20px;margin-top:4px}.green{color:var(--green)}.red{color:var(--red)}.muted{color:var(--muted)}
+    h2{margin:0 0 12px;font-size:20px}h3{margin:0 0 8px;font-size:16px}.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+    .item{padding:12px 0;border-bottom:1px solid var(--line)}.pill{display:inline-block;padding:3px 8px;border-radius:99px;background:#eee;color:#555;font-size:11px}
+    body.dark .pill{background:#303030;color:#ccc}.badge-ok{background:#e6fcf5;color:#087f5b;padding:3px 7px;border-radius:6px;font-size:11px;font-weight:bold}
+    .badge-warn{background:#fef3c7;color:#92400e;padding:3px 7px;border-radius:6px;font-size:11px;font-weight:bold}
+    .badge-danger{background:#fee2e2;color:#991b1b;padding:3px 7px;border-radius:6px;font-size:11px;font-weight:bold}
+    .tag{display:inline-block;padding:2px 7px;border-radius:6px;background:#e2e8f0;color:#334155;font-size:11px;margin-right:4px}
+    body.dark .tag{background:#334155;color:#f1f5f9}button{border:0;border-radius:12px;padding:11px 15px;background:#111;color:#fff;font-weight:700;font-size:14px;cursor:pointer}
+    body.dark button{background:#eee;color:#111}.secondary{background:#e8e8e8!important;color:#111!important}
+    body.dark .secondary{background:#303030!important;color:#fff!important}.danger{background:#c92a2a!important;color:#fff!important}
+    .full{width:100%}.actions{display:flex;gap:6px;flex-wrap:wrap}.actions>*{flex:1}
+    input,select,textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--text);font-size:15px;margin:4px 0 8px}
+    textarea{min-height:70px}label{font-size:12px;font-weight:700;color:var(--muted)}
+    .progress{height:10px;background:#e5e5e5;border-radius:99px;overflow:hidden;margin:6px 0}.bar{height:100%;background:#111;width:0}
+    .searchbar{display:grid;grid-template-columns:1fr 1fr;gap:6px}.empty{text-align:center;color:var(--muted);padding:20px}
+    .bottom{position:fixed;left:16px;right:16px;bottom:14px;z-index:20}.bottom button{width:100%;font-size:17px;padding:15px;border-radius:18px}
+    .modal{position:fixed;inset:0;background:#0008;display:none;align-items:flex-end;justify-content:center;z-index:50}.modal.show{display:flex}
+    .sheet{background:var(--card);color:var(--text);width:100%;max-width:600px;border-radius:24px 24px 0 0;padding:18px;max-height:90vh;overflow-y:auto}
+    .close{float:right;background:transparent!important;color:var(--text)!important;font-size:24px;padding:0 6px;cursor:pointer}
+    hr{border:0;border-top:1px solid var(--line);margin:16px 0}.banner{padding:10px 14px;border-radius:12px;margin-bottom:10px;font-weight:600;font-size:13px}
+    .banner-danger{background:#fee2e2;color:#991b1b;border:1px solid #f87171}.banner-warn{background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+    .cal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+    .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+    .cal-head-day{font-size:11px;font-weight:bold;color:var(--muted);padding:6px 0}
+    .cal-cell{min-height:42px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:10px;cursor:pointer;font-size:13px;border:1px solid transparent}
+    .cal-cell.today{border-color:var(--line);font-weight:bold}.cal-cell.active-day{background:#111!important;color:#fff!important}
+    body.dark .cal-cell.active-day{background:#eee!important;color:#111!important}.cal-dot{width:5px;height:5px;border-radius:50%;background:var(--red);margin-top:2px}
+    .cal-cell.active-day .cal-dot{background:#fff}
+    #lockscreen{position:fixed;inset:0;background:var(--bg);color:var(--text);z-index:9999;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
+    #lockscreen input{max-width:220px;text-align:center;font-size:26px;letter-spacing:8px}
+    @media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}.bottom{max-width:600px;left:50%;transform:translateX(-50%);width:570px}}
   </style>
 </head>
 <body>
+
+<div id="lockscreen">
+  <div class="logo">🔐 KharchBook</div>
+  <p class="muted">Enter PIN to Unlock</p>
+  <input type="password" id="unlock_pin" maxlength="6" inputmode="numeric" placeholder="••••">
+  <div style="width:100%;max-width:220px;margin-top:10px"><button class="full" onclick="verifyPin()">Unlock</button></div>
+</div>
+
 <header>
   <div>
     <div class="logo">💰 KharchBook <span class="pill">2.0</span></div>
-    <div class="sub">Your money, your control • works offline</div>
+    <div class="sub">Your money, your control • offline</div>
   </div>
   <button class="moon" onclick="dark()">🌙</button>
 </header>
@@ -77,6 +72,7 @@
 <nav>
   <button class="active" data-p="home">🏠 Home</button>
   <button data-p="history">📜 History</button>
+  <button data-p="calendar">📅 Calendar</button>
   <button data-p="tools">🧰 Tools</button>
   <button data-p="goals">🎯 Goals</button>
   <button data-p="settings">⚙️ Settings</button>
@@ -84,11 +80,12 @@
 
 <main>
   <section id="home" class="page active">
+    <div id="home_alerts"></div>
     <div class="grid">
-      <div class="stat"><small>Balance</small><b id="bal">₹0</b></div>
-      <div class="stat"><small>Income</small><b id="inc" class="green">₹0</b></div>
-      <div class="stat"><small>Expense</small><b id="exp" class="red">₹0</b></div>
-      <div class="stat"><small>This Month</small><b id="mexp">₹0</b></div>
+      <div class="stat"><small>Spending Power (Total Usable)</small><b id="usable_bal">₹0</b></div>
+      <div class="stat"><small>Real Balance (Cash + Bank)</small><b id="real_bal" class="green">₹0</b></div>
+      <div class="stat"><small>This Month Expense</small><b id="mexp" class="red">₹0</b></div>
+      <div class="stat"><small>Cards Due (Unpaid)</small><b id="cards_due" class="red">₹0</b></div>
     </div>
     <div class="card">
       <div class="row"><h2>📊 Monthly Budget</h2><b id="bt">₹0 / ₹0</b></div>
@@ -109,30 +106,40 @@
     <div class="card">
       <h2>📜 Transaction History</h2>
       <div class="searchbar">
-        <input id="q" placeholder="Search...">
-        <select id="ft">
-          <option value="">All types</option>
-          <option value="expense">Expense</option>
-          <option value="income">Income</option>
-        </select>
+        <input id="q" placeholder="Search title, amount, #tag, note...">
+        <select id="ft"><option value="">All types</option><option value="expense">Expense</option><option value="income">Income</option></select>
       </div>
       <div class="searchbar">
         <select id="fc"><option value="">All categories</option></select>
-        <select id="fa"><option value="">All accounts</option></select>
+        <select id="fa"><option value="">All accounts / cards</option></select>
+      </div>
+      <div class="searchbar" style="grid-template-columns:1fr;margin-top:6px">
+        <select id="ftag"><option value="">All tags</option></select>
       </div>
       <div id="hist"></div>
     </div>
   </section>
 
-  <section id="tools" class="page">
+  <section id="calendar" class="page">
     <div class="card">
-      <h2>🔁 Recurring Payments</h2>
-      <button onclick="recForm()">＋ Add Recurring</button>
-      <div id="recs"></div>
+      <div class="cal-header">
+        <button class="secondary" onclick="changeMonth(-1)">◀ Prev</button>
+        <h3 id="cal_month_title" style="margin:0">Month</h3>
+        <button class="secondary" onclick="changeMonth(1)">Next ▶</button>
+      </div>
+      <div class="cal-grid" id="cal_weekdays"></div>
+      <div class="cal-grid" id="cal_days"></div>
     </div>
     <div class="card">
-      <h2>💳 Credit Cards</h2>
-      <button onclick="cardForm()">＋ Add Card</button>
+      <h3 id="cal_selected_title">Transactions on Selected Date</h3>
+      <div id="cal_tx_list"></div>
+    </div>
+  </section>
+
+  <section id="tools" class="page">
+    <div class="card">
+      <h2>💳 Credit Cards & Loans</h2>
+      <button onclick="cardForm()">＋ Add Card / Loan</button>
       <div id="cards"></div>
     </div>
     <div class="card">
@@ -141,22 +148,20 @@
       <div id="emis"></div>
     </div>
     <div class="card">
-      <h2>🔔 Upcoming Payments</h2>
-      <div id="up"></div>
+      <h2>🔁 Recurring Payments</h2>
+      <button onclick="recForm()">＋ Add Recurring</button>
+      <div id="recs"></div>
     </div>
     <div class="card">
-      <h2>🏦 Accounts</h2>
+      <h2>🏦 Accounts (Cash / Bank / UPI)</h2>
       <button onclick="accForm()">＋ Add Account</button>
       <div id="accs"></div>
     </div>
     <div class="card">
       <h2>💱 Currency</h2>
       <select id="cur" onchange="DB.currency=this.value;save()">
-        <option value="INR">INR</option>
-        <option value="USD">USD</option>
-        <option value="EUR">EUR</option>
-        <option value="GBP">GBP</option>
-        <option value="AED">AED</option>
+        <option value="INR">INR (₹)</option><option value="USD">USD ($)</option>
+        <option value="EUR">EUR (€)</option><option value="GBP">GBP (£)</option><option value="AED">AED (د.إ)</option>
       </select>
     </div>
   </section>
@@ -165,7 +170,7 @@
     <div class="card">
       <h2>🎯 Savings Goals</h2>
       <button onclick="goalForm()">＋ Add Goal</button>
-      <div id="goals-list"></div>
+      <div id="goals_list"></div>
     </div>
     <div class="card">
       <h2>🔥 Savings Challenge</h2>
@@ -183,11 +188,11 @@
       <input id="budget" type="number">
       <button onclick="DB.budget=+budget.value||0;save();toast('Budget saved ✅')">Save Budget</button>
       <hr>
-      <h3>🔐 PIN Lock</h3>
+      <h3>🔐 PIN App Lock (SHA-256)</h3>
       <input id="pin" inputmode="numeric" maxlength="6" placeholder="4-6 digit PIN">
       <div class="actions">
-        <button onclick="setPin()">Save PIN</button>
-        <button class="secondary" onclick="DB.pin='';save();pin.value='';toast('PIN removed')">Remove PIN</button>
+        <button onclick="savePin()">Set PIN</button>
+        <button class="secondary" onclick="removePin()">Remove PIN</button>
       </div>
       <hr>
       <h3>💾 Backup & Restore</h3>
@@ -207,23 +212,17 @@
 
 <div class="bottom"><button onclick="txForm()">＋ Add Transaction</button></div>
 <div id="modal" class="modal"><div class="sheet"><button class="close" onclick="closeM()">×</button><div id="mb"></div></div></div>
-<div id="toast" style="position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#111;color:#fff;padding:12px 18px;border-radius:99px;display:none;z-index:99"></div>
+<div id="toast" style="position:fixed;left:50%;bottom:85px;transform:translateX(-50%);background:#111;color:#fff;padding:12px 18px;border-radius:99px;display:none;z-index:99999"></div>
 
 <script>
-const K = 'kharchbook_2_0_v3';
+const K = 'kharchbook_2_0_v9';
+let isUnlocked = false;
+
 let DB = JSON.parse(localStorage.getItem(K) || 'null') || {
   transactions: [],
-  accounts: [{ id: uid(), name: 'Cash', balance: 0 }],
-  recurring: [],
-  cards: [],
-  emis: [],
-  goals: [],
-  trash: [],
-  budget: 0,
-  currency: 'INR',
-  dark: false,
-  challenge: 0,
-  pin: ''
+  accounts: [{ id: uid(), name: 'Cash', balance: 0 }, { id: uid(), name: 'Bank', balance: 0 }],
+  recurring: [], cards: [], emis: [], goals: [], trash: [],
+  budget: 0, currency: 'INR', dark: false, challenge: 0, pinHash: ''
 };
 
 function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
@@ -233,11 +232,12 @@ function toast(x) {
   const toastEl = document.getElementById('toast');
   toastEl.textContent = x;
   toastEl.style.display = 'block';
-  clearTimeout(window.xx);
-  window.xx = setTimeout(() => toastEl.style.display = 'none', 2000);
+  clearTimeout(window.tTimer);
+  window.tTimer = setTimeout(() => toastEl.style.display = 'none', 2200);
 }
 function money(n) {
-  return ({ INR: '₹', USD: '$', EUR: '€', GBP: '£', AED: 'د.إ' }[DB.currency] || '₹') + Number(n || 0).toLocaleString('en-IN', { maximumFractionDigits: 2 });
+  const sym = { INR: '₹', USD: '$', EUR: '€', GBP: '£', AED: 'د.إ' }[DB.currency] || '₹';
+  return sym + Number(n || 0).toLocaleString('en-IN', { maximumFractionDigits: 2 });
 }
 function esc(s) {
   return String(s ?? '').replace(/[&<>'"]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[m]));
@@ -245,6 +245,72 @@ function esc(s) {
 function td() { return new Date().toISOString().slice(0, 10); }
 function fd(x) { return x ? new Date(x + 'T00:00').toLocaleDateString('en-IN') : ''; }
 function openM(t, b) { mb.innerHTML = '<h2>' + t + '</h2>' + b; modal.classList.add('show'); }
+
+function getNextMonthDate(dStr) {
+  if (!dStr) return td();
+  const parts = dStr.split('-');
+  let y = parseInt(parts[0], 10), m = parseInt(parts[1], 10), d = parseInt(parts[2], 10);
+  m += 1;
+  if (m > 12) { m = 1; y += 1; }
+  const maxD = new Date(y, m, 0).getDate();
+  return `${y}-${String(m).padStart(2, '0')}-${String(Math.min(d, maxD)).padStart(2, '0')}`;
+}
+
+function syncCardDueDates() {
+  let changed = false;
+  DB.cards.forEach(c => {
+    while ((c.used || 0) <= 0 && c.date <= td()) {
+      c.date = getNextMonthDate(c.date);
+      changed = true;
+    }
+  });
+  if (changed) localStorage.setItem(K, JSON.stringify(DB));
+}
+
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function savePin() {
+  const val = document.getElementById('pin').value.trim();
+  if (val.length < 4 || val.length > 6) return toast('PIN 4 se 6 digit ka hona chahiye');
+  DB.pinHash = await sha256(val);
+  isUnlocked = true;
+  save();
+  document.getElementById('pin').value = '';
+  toast('PIN Lock Set 🔐');
+}
+
+function removePin() {
+  DB.pinHash = '';
+  isUnlocked = true;
+  save();
+  document.getElementById('pin').value = '';
+  toast('PIN Removed 🔓');
+}
+
+async function verifyPin() {
+  const entered = document.getElementById('unlock_pin').value.trim();
+  if (!entered) return;
+  const h = await sha256(entered);
+  if (h === DB.pinHash) {
+    isUnlocked = true;
+    document.getElementById('lockscreen').style.display = 'none';
+    document.getElementById('unlock_pin').value = '';
+  } else {
+    toast('Galat PIN! Dubara try karein ❌');
+    document.getElementById('unlock_pin').value = '';
+  }
+}
+
+function checkLock() {
+  if (DB.pinHash && !isUnlocked) {
+    document.getElementById('lockscreen').style.display = 'flex';
+  } else {
+    document.getElementById('lockscreen').style.display = 'none';
+  }
+}
 
 function dark() {
   DB.dark = !DB.dark;
@@ -257,25 +323,58 @@ document.querySelectorAll('nav button').forEach(b => b.onclick = () => {
   b.classList.add('active');
   document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
   document.getElementById(b.dataset.p).classList.add('active');
+  if (b.dataset.p === 'calendar') renderCalendar();
   render();
 });
 
+function getAccountOptions(selectedId = '') {
+  let html = '<optgroup label="🏦 Cash / Bank Accounts">';
+  html += DB.accounts.map(a => `<option value="${a.id}" ${selectedId === a.id ? 'selected' : ''}>🏦 ${esc(a.name)}</option>`).join('');
+  html += '</optgroup>';
+
+  if (DB.cards.length > 0) {
+    html += '<optgroup label="💳 Credit Cards (Spend from Limit)">';
+    html += DB.cards.map(c => {
+      const avail = Math.max(0, c.limit - (c.used || 0));
+      return `<option value="card_${c.id}" ${selectedId === 'card_' + c.id ? 'selected' : ''}>💳 ${esc(c.name)} (Avail: ${money(avail)})</option>`;
+    }).join('');
+    html += '</optgroup>';
+  }
+  return html;
+}
+
+function getAccountName(accId) {
+  if (!accId) return '';
+  if (accId.startsWith('card_')) {
+    const cid = accId.replace('card_', '');
+    const c = DB.cards.find(x => x.id === cid);
+    return c ? `💳 ${c.name}` : 'Card';
+  }
+  const a = DB.accounts.find(x => x.id === accId);
+  return a ? `🏦 ${a.name}` : 'Account';
+}
+
 function txForm(edit = '') {
-  let t = DB.transactions.find(x => x.id === edit) || {},
-    cats = ['Food', 'Travel', 'Shopping', 'Bills', 'Rent', 'EMI', 'Health', 'Education', 'Entertainment', 'Salary', 'Business', 'Other'];
+  const t = DB.transactions.find(x => x.id === edit) || {};
+  const cats = ['Rent', 'Bills', 'EMI', 'Food', 'Travel', 'Shopping', 'Health', 'Education', 'Entertainment', 'Salary', 'Business', 'Other'];
+  const tagStr = (t.tags || []).join(' ');
+
   openM(edit ? '✏️ Edit Transaction' : '➕ Add Transaction', `
     <label>Type</label>
     <select id="ty">
       <option value="expense" ${t.type === 'expense' ? 'selected' : ''}>Expense</option>
       <option value="income" ${t.type === 'income' ? 'selected' : ''}>Income</option>
     </select>
-    <label>Amount *</label><input id="amt" type="number" value="${t.amount || ''}">
-    <label>Title *</label><input id="title" value="${esc(t.title || '')}" placeholder="Grocery / Salary">
+    <label>Amount *</label><input id="amt" type="number" step="any" value="${t.amount || ''}">
+    <label>Title *</label><input id="title" value="${esc(t.title || '')}" placeholder="Rent / Grocery / Shopping">
     <label>Category</label><select id="cat">${cats.map(c => '<option ' + (t.category === c ? 'selected' : '') + '>' + c + '</option>').join('')}</select>
-    <label>Account</label><select id="account">${DB.accounts.map(a => '<option value="' + a.id + '" ' + (t.accountId === a.id ? 'selected' : '') + '>' + esc(a.name) + '</option>').join('')}</select>
+    <label>Payment Source (Bank, Cash, or Credit Card)</label>
+    <select id="account">${getAccountOptions(t.accountId)}</select>
+    <label>Custom Tags (#office #trip #rent)</label>
+    <input id="tx_tags" value="${esc(tagStr)}" placeholder="#rent #trip">
     <label>Date</label><input id="date" type="date" value="${t.date || td()}">
-    <label>Notes</label><textarea id="notes">${esc(t.notes || '')}</textarea>
-    <label>Receipt photo</label><input id="receipt" type="file" accept="image/*">
+    <label>Notes / Ref No.</label><textarea id="notes" placeholder="Invoice number ya notes">${esc(t.notes || '')}</textarea>
+    <label>Receipt Photo</label><input id="receipt" type="file" accept="image/*">
     <div class="actions">
       <button onclick="saveTx('${edit}')">Save</button>
       <button class="secondary" onclick="closeM()">Cancel</button>
@@ -284,21 +383,51 @@ function txForm(edit = '') {
 }
 
 function saveTx(edit) {
-  let amt = +document.getElementById('amt').value,
-    title = document.getElementById('title').value.trim(),
-    old = DB.transactions.find(x => x.id === edit),
-    f = document.getElementById('receipt').files[0];
-  if (!amt || !title) return toast('Amount aur title bharna hai');
+  const amt = +document.getElementById('amt').value;
+  const title = document.getElementById('title').value.trim();
+  const rawTags = document.getElementById('tx_tags').value;
+  const tags = rawTags.split(/\s+/).map(x => x.trim()).filter(x => x.length > 0).map(x => x.startsWith('#') ? x : '#' + x);
+  const selectedAcc = document.getElementById('account').value;
+  const ty = document.getElementById('ty').value;
+  const old = DB.transactions.find(x => x.id === edit);
+  const f = document.getElementById('receipt').files[0];
+
+  if (!amt || !title) return toast('Amount aur title bharna zaroori hai');
+
+  if (old && old.accountId && old.accountId.startsWith('card_')) {
+    const oldCid = old.accountId.replace('card_', '');
+    const oldCard = DB.cards.find(c => c.id === oldCid);
+    if (oldCard) {
+      if (old.type === 'expense') oldCard.used -= old.amount;
+      else if (old.type === 'income') oldCard.used += old.amount;
+    }
+  }
+
+  if (selectedAcc.startsWith('card_')) {
+    const newCid = selectedAcc.replace('card_', '');
+    const newCard = DB.cards.find(c => c.id === newCid);
+    if (newCard) {
+      if ((newCard.used || 0) <= 0 && newCard.date <= td()) {
+        while (newCard.date <= td()) {
+          newCard.date = getNextMonthDate(newCard.date);
+        }
+      }
+      if (ty === 'expense') newCard.used += amt;
+      else if (ty === 'income') newCard.used = Math.max(0, newCard.used - amt);
+    }
+  }
+
   function done(pic) {
-    let t = {
+    const t = {
       id: edit || uid(),
-      type: ty.value,
+      type: ty,
       amount: amt,
       title,
-      category: cat.value,
-      accountId: account.value,
-      date: date.value,
-      notes: notes.value.trim(),
+      category: document.getElementById('cat').value,
+      accountId: selectedAcc,
+      date: document.getElementById('date').value,
+      tags,
+      notes: document.getElementById('notes').value.trim(),
       receipt: pic !== undefined ? pic : (old?.receipt || '')
     };
     if (old) Object.assign(old, t);
@@ -307,8 +436,9 @@ function saveTx(edit) {
     save();
     toast('Transaction saved ✅');
   }
+
   if (f) {
-    let r = new FileReader();
+    const r = new FileReader();
     r.onload = () => done(r.result);
     r.readAsDataURL(f);
   } else done();
@@ -316,53 +446,129 @@ function saveTx(edit) {
 
 function delTx(i) {
   if (!confirm('Trash me bhejna hai?')) return;
-  let t = DB.transactions.find(x => x.id === i);
+  const t = DB.transactions.find(x => x.id === i);
+  if (t && t.accountId && t.accountId.startsWith('card_')) {
+    const cid = t.accountId.replace('card_', '');
+    const card = DB.cards.find(c => c.id === cid);
+    if (card) {
+      if (t.type === 'expense') card.used = Math.max(0, card.used - t.amount);
+      else if (t.type === 'income') card.used += t.amount;
+    }
+  }
   DB.trash.push({ kind: 'transactions', data: t });
   DB.transactions = DB.transactions.filter(x => x.id !== i);
   save();
 }
 
+function checkDue(dateStr, outstanding = 1) {
+  if (!dateStr || outstanding <= 0) {
+    return { label: 'Fully Paid ✅', cls: 'badge-ok', isDue: false };
+  }
+  const today = new Date(td() + 'T00:00:00');
+  const target = new Date(dateStr + 'T00:00:00');
+  const diff = Math.round((target - today) / (1000 * 60 * 60 * 24));
+  if (diff < 0) return { label: 'Overdue!', cls: 'badge-danger', isDue: true };
+  if (diff === 0) return { label: 'Due Today!', cls: 'badge-danger', isDue: true };
+  if (diff === 1) return { label: 'Due Tomorrow!', cls: 'badge-warn', isDue: true };
+  return { label: `Due in ${diff}d`, cls: 'pill', isDue: false };
+}
+
 function renderHome() {
-  let I = DB.transactions.filter(t => t.type === 'income').reduce((a, t) => a + t.amount, 0),
-    E = DB.transactions.filter(t => t.type === 'expense').reduce((a, t) => a + t.amount, 0),
-    m = new Date().toISOString().slice(0, 7),
-    ME = DB.transactions.filter(t => t.type === 'expense' && t.date.startsWith(m)).reduce((a, t) => a + t.amount, 0);
-  bal.textContent = money(I - E);
-  inc.textContent = money(I);
-  exp.textContent = money(E);
+  syncCardDueDates();
+
+  let totalRealMoney = DB.accounts.reduce((sum, a) => {
+    const txTotal = DB.transactions.filter(t => t.accountId === a.id).reduce((acc, t) => acc + (t.type === 'income' ? t.amount : -t.amount), 0);
+    return sum + (a.balance + txTotal);
+  }, 0);
+
+  let totalCardAvail = DB.cards.reduce((acc, c) => acc + Math.max(0, c.limit - (c.used || 0)), 0);
+  let totalCardsDue = DB.cards.reduce((acc, c) => acc + (c.used || 0), 0);
+
+  const m = new Date().toISOString().slice(0, 7);
+  const ME = DB.transactions.filter(t => t.type === 'expense' && t.date.startsWith(m)).reduce((a, t) => a + t.amount, 0);
+
+  usable_bal.textContent = money(totalRealMoney + totalCardAvail);
+  real_bal.textContent = money(totalRealMoney);
   mexp.textContent = money(ME);
+  cards_due.textContent = money(totalCardsDue);
+
   bt.textContent = money(ME) + ' / ' + money(DB.budget);
-  bb.style.width = (DB.budget ? Math.min(100, ME / DB.budget * 100) : 0) + '%';
-  bm.textContent = DB.budget ? (ME > DB.budget ? '⚠️ Budget crossed' : ME > DB.budget * .8 ? '⚠️ 80%+ budget used' : '👍 Budget under control') : 'Budget set karo';
-  let z = {};
+  bb.style.width = (DB.budget ? Math.min(100, (ME / DB.budget) * 100) : 0) + '%';
+
+  const alertsEl = document.getElementById('home_alerts');
+  alertsEl.innerHTML = '';
+  if (DB.budget > 0) {
+    if (ME >= DB.budget) {
+      alertsEl.innerHTML += `<div class="banner banner-danger">🚨 Alert: Monthly budget limit exceed ho gaya hai!</div>`;
+      bm.textContent = '⚠️ Budget crossed';
+    } else if (ME >= DB.budget * 0.8) {
+      alertsEl.innerHTML += `<div class="banner banner-warn">⚠️ Warning: Aapka 80%+ budget use ho chuka hai.</div>`;
+      bm.textContent = '⚠️ 80%+ budget used';
+    } else {
+      bm.textContent = '👍 Budget under control';
+    }
+  } else {
+    bm.textContent = 'Budget set karo';
+  }
+
+  const urgentCards = DB.cards.filter(c => (c.used || 0) > 0).map(c => ({ name: c.name, st: checkDue(c.date, c.used) })).filter(x => x.st && x.st.isDue);
+  const urgentEmis = DB.emis.filter(e => (e.months || 0) > 0).map(e => ({ name: e.name, st: checkDue(e.date, e.amount) })).filter(x => x.st && x.st.isDue);
+
+  [...urgentCards, ...urgentEmis].forEach(u => {
+    alertsEl.innerHTML += `<div class="banner banner-warn">🔔 Reminder: ${esc(u.name)} is <b>${u.st.label}</b></div>`;
+  });
+
+  const z = {};
   DB.transactions.filter(t => t.type === 'expense').forEach(t => z[t.category] = (z[t.category] || 0) + t.amount);
-  let top = Object.entries(z).sort((a, b) => b[1] - a[1])[0];
-  ins.textContent = top ? 'Sabse zyada spending ' + top[0] + ' par: ' + money(top[1]) : 'Add expenses to get an insight.';
+  const top = Object.entries(z).sort((a, b) => b[1] - a[1])[0];
+  ins.textContent = top ? `Sabse zyada spending ${top[0]} par: ${money(top[1])}` : 'Add expenses to get an insight.';
+
   recent.innerHTML = DB.transactions.slice(0, 6).map(t => `
     <div class="item row">
-      <span><b>${esc(t.title)}</b><br><small class="muted">${fd(t.date)} • ${esc(t.category)}</small></span>
+      <span>
+        <b>${esc(t.title)}</b> ${(t.tags || []).map(x => `<span class="tag">${esc(x)}</span>`).join('')}<br>
+        <small class="muted">${fd(t.date)} • ${esc(t.category)} • ${getAccountName(t.accountId)}</small>
+      </span>
       <b class="${t.type === 'income' ? 'green' : 'red'}">${t.type === 'income' ? '+' : '-'}${money(t.amount)}</b>
     </div>
   `).join('') || '<div class="empty">No transactions.</div>';
 }
 
 function populateFilters() {
-  const currentC = fc.value;
-  const currentA = fa.value;
-  fc.innerHTML = '<option value="">All categories</option>' + [...new Set(DB.transactions.map(t => t.category))].map(x => `<option value="${esc(x)}" ${currentC===x?'selected':''}>${esc(x)}</option>`).join('');
-  fa.innerHTML = '<option value="">All accounts</option>' + DB.accounts.map(a => `<option value="${a.id}" ${currentA===a.id?'selected':''}>${esc(a.name)}</option>`).join('');
+  const currentC = fc.value, currentA = fa.value, currentTag = ftag.value;
+  fc.innerHTML = '<option value="">All categories</option>' + [...new Set(DB.transactions.map(t => t.category))].map(x => `<option value="${esc(x)}" ${currentC === x ? 'selected' : ''}>${esc(x)}</option>`).join('');
+  fa.innerHTML = '<option value="">All accounts / cards</option>' + getAccountOptions(currentA);
+  const allTags = [...new Set(DB.transactions.flatMap(t => t.tags || []))];
+  ftag.innerHTML = '<option value="">All tags</option>' + allTags.map(x => `<option value="${esc(x)}" ${currentTag === x ? 'selected' : ''}>${esc(x)}</option>`).join('');
 }
 
 function renderHist() {
-  let q = (document.getElementById('q').value || '').toLowerCase(),
-    T = ft.value,
-    C = fc.value,
-    A = fa.value,
-    a = DB.transactions.filter(t => (!q || (t.title + ' ' + t.category + ' ' + t.notes).toLowerCase().includes(q)) && (!T || t.type === T) && (!C || t.category === C) && (!A || t.accountId === A));
-  hist.innerHTML = a.map(t => `
+  const q = (document.getElementById('q').value || '').trim().toLowerCase();
+  const T = ft.value, C = fc.value, A = fa.value, Tag = ftag.value;
+
+  const filtered = DB.transactions.filter(t => {
+    const matchType = !T || t.type === T;
+    const matchCat = !C || t.category === C;
+    const matchAcc = !A || t.accountId === A;
+    const matchTag = !Tag || (t.tags && t.tags.includes(Tag));
+    let matchQuery = true;
+    if (q) {
+      const matchText = (t.title + ' ' + t.category + ' ' + (t.notes || '')).toLowerCase().includes(q);
+      const matchAmount = String(t.amount).includes(q);
+      const matchTags = (t.tags || []).some(x => x.toLowerCase().includes(q));
+      matchQuery = matchText || matchAmount || matchTags;
+    }
+    return matchType && matchCat && matchAcc && matchTag && matchQuery;
+  });
+
+  hist.innerHTML = filtered.map(t => `
     <div class="item">
       <div class="row">
-        <span><b>${esc(t.title)}</b><br><small class="muted">${esc(t.category)} • ${fd(t.date)} • ${esc(DB.accounts.find(x => x.id === t.accountId)?.name || '')}</small></span>
+        <span>
+          <b>${esc(t.title)}</b> ${(t.tags || []).map(x => `<span class="tag">${esc(x)}</span>`).join('')}<br>
+          <small class="muted">${esc(t.category)} • ${fd(t.date)} • ${getAccountName(t.accountId)}</small>
+          ${t.notes ? `<br><small class="muted">Ref: ${esc(t.notes)}</small>` : ''}
+        </span>
         <b class="${t.type === 'income' ? 'green' : 'red'}">${t.type === 'income' ? '+' : '-'}${money(t.amount)}</b>
       </div>
       <div class="actions" style="margin-top:8px">
@@ -371,19 +577,220 @@ function renderHist() {
         ${t.receipt ? `<button class="secondary" onclick="viewReceipt('${t.id}')">Receipt</button>` : ''}
       </div>
     </div>
-  `).join('') || '<div class="empty">No results.</div>';
+  `).join('') || '<div class="empty">No results found.</div>';
 }
 
 function viewReceipt(id) {
-  let t = DB.transactions.find(x => x.id === id);
-  if (t && t.receipt) openM('🧾 Receipt', `<img src="${t.receipt}" style="width:100%;border-radius:12px;">`);
+  const t = DB.transactions.find(x => x.id === id);
+  if (t && t.receipt) openM('🧾 Receipt', `<img src="${t.receipt}" style="width:100%;border-radius:12px">`);
 }
 
-[q, ft, fc, fa].forEach(e => e.addEventListener('input', () => renderHist()));
+[q, ft, fc, fa, ftag].forEach(e => e.addEventListener('input', renderHist));
+
+let currentCalDate = new Date();
+let selectedDateStr = td();
+
+function renderCalendar() {
+  const y = currentCalDate.getFullYear(), m = currentCalDate.getMonth();
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  document.getElementById('cal_month_title').textContent = `${monthNames[m]} ${y}`;
+
+  const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  document.getElementById('cal_weekdays').innerHTML = weekdays.map(d => `<div class="cal-head-day">${d}</div>`).join('');
+
+  const firstDay = new Date(y, m, 1).getDay();
+  const totalDays = new Date(y, m + 1, 0).getDate();
+  const daysContainer = document.getElementById('cal_days');
+  daysContainer.innerHTML = '';
+
+  for (let i = 0; i < firstDay; i++) daysContainer.innerHTML += `<div></div>`;
+
+  for (let d = 1; d <= totalDays; d++) {
+    const dStr = `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+    const hasTx = DB.transactions.some(t => t.date === dStr);
+    const isToday = dStr === td();
+    const isSelected = dStr === selectedDateStr;
+
+    daysContainer.innerHTML += `
+      <div class="cal-cell ${isToday ? 'today' : ''} ${isSelected ? 'active-day' : ''}" onclick="selectCalDate('${dStr}')">
+        <span>${d}</span>
+        ${hasTx ? '<div class="cal-dot"></div>' : ''}
+      </div>
+    `;
+  }
+  renderCalendarTx();
+}
+
+function changeMonth(delta) {
+  currentCalDate.setMonth(currentCalDate.getMonth() + delta);
+  renderCalendar();
+}
+
+function selectCalDate(dStr) {
+  selectedDateStr = dStr;
+  renderCalendar();
+}
+
+function renderCalendarTx() {
+  document.getElementById('cal_selected_title').textContent = `Transactions on ${fd(selectedDateStr)}`;
+  const list = DB.transactions.filter(t => t.date === selectedDateStr);
+  document.getElementById('cal_tx_list').innerHTML = list.map(t => `
+    <div class="item row">
+      <span><b>${esc(t.title)}</b><br><small class="muted">${esc(t.category)} • ${getAccountName(t.accountId)}</small></span>
+      <b class="${t.type === 'income' ? 'green' : 'red'}">${t.type === 'income' ? '+' : '-'}${money(t.amount)}</b>
+    </div>
+  `).join('') || '<div class="empty">Is date par koi transaction nahi hai.</div>';
+}
+
+function cardForm() {
+  openM('💳 Add Card / Loan', `
+    <label>Card / Loan Name</label><input id="cn" placeholder="HDFC Card / Car Loan">
+    <label>Total Limit / Loan Amount</label><input id="cl" type="number" placeholder="10000">
+    <label>Current Used / Outstanding</label><input id="cu" type="number" value="0">
+    <label>Due Date</label><input id="cd" type="date" value="${td()}">
+    <button onclick="addCard()">Save</button>
+  `);
+}
+
+function addCard() {
+  if (!cn.value.trim() || !+cl.value) return toast('Details bharna zaroori hai');
+  DB.cards.push({ id: uid(), name: cn.value.trim(), limit: +cl.value, used: +cu.value || 0, date: cd.value });
+  closeM();
+  save();
+}
+
+function payCard(id) {
+  const c = DB.cards.find(x => x.id === id);
+  if (!c) return;
+  if ((c.used || 0) <= 0) return toast('Card par koi due balance nahi hai');
+
+  openM(`💳 Pay Bill: ${esc(c.name)}`, `
+    <label>Bill Amount to Pay</label>
+    <input id="pay_amt" type="number" value="${c.used}">
+    <label>Pay From (Paisa kis account se katega?)</label>
+    <select id="pay_src">
+      ${DB.accounts.map(a => `<option value="${a.id}">🏦 ${esc(a.name)}</option>`).join('')}
+    </select>
+    <div class="actions">
+      <button onclick="confirmCardPayment('${c.id}')">Pay & Deduct</button>
+      <button class="secondary" onclick="closeM()">Cancel</button>
+    </div>
+  `);
+}
+
+function confirmCardPayment(cardId) {
+  const c = DB.cards.find(x => x.id === cardId);
+  const amt = Number(document.getElementById('pay_amt').value);
+  const srcId = document.getElementById('pay_src').value;
+
+  if (!amt || amt <= 0) return toast('Valid amount enter karein');
+  if (amt > c.used) return toast('Outstanding amount se zyada payment nahi ho sakta');
+
+  c.used = Math.max(0, c.used - amt);
+
+  if (c.used === 0) {
+    while (c.date <= td()) {
+      c.date = getNextMonthDate(c.date);
+    }
+  }
+
+  DB.transactions.unshift({
+    id: uid(),
+    type: 'expense',
+    amount: amt,
+    title: `Card Bill: ${c.name}`,
+    category: 'Bills',
+    accountId: srcId,
+    date: td(),
+    tags: ['#cardbill'],
+    notes: `Paid credit card bill for ${c.name}`
+  });
+
+  closeM();
+  save();
+  toast('Bill paid! Due date next month shift ho gayi ✅');
+}
+
+function emiForm() {
+  openM('🧮 Add EMI', `
+    <label>Name</label><input id="en" placeholder="Phone EMI / Home Loan">
+    <label>Monthly EMI Amount</label><input id="ea" type="number">
+    <label>Months Left</label><input id="em" type="number">
+    <label>Next Due Date</label><input id="ed" type="date" value="${td()}">
+    <button onclick="addEMI()">Save</button>
+  `);
+}
+
+function addEMI() {
+  if (!en.value.trim() || !+ea.value) return toast('Details bharna zaroori hai');
+  DB.emis.push({ id: uid(), name: en.value.trim(), amount: +ea.value, months: +em.value || 0, date: ed.value });
+  closeM();
+  save();
+}
+
+function payEMIInstallment(id) {
+  const e = DB.emis.find(x => x.id === id);
+  if (!e) return;
+  if (e.months <= 0) return toast('EMI already complete ho chuka hai');
+
+  openM(`🧮 Pay EMI: ${esc(e.name)}`, `
+    <p>Monthly EMI Amount: <b>${money(e.amount)}</b></p>
+    <label>Paisa kis account se deduct hoga?</label>
+    <select id="emi_src">
+      ${DB.accounts.map(a => `<option value="${a.id}">🏦 ${esc(a.name)}</option>`).join('')}
+    </select>
+    <div class="actions">
+      <button onclick="confirmEMIPayment('${e.id}')">Deduct & Mark Paid</button>
+      <button class="secondary" onclick="closeM()">Cancel</button>
+    </div>
+  `);
+}
+
+function confirmEMIPayment(emiId) {
+  const e = DB.emis.find(x => x.id === emiId);
+  const srcId = document.getElementById('emi_src').value;
+
+  e.months = Math.max(0, e.months - 1);
+  e.date = getNextMonthDate(e.date);
+
+  DB.transactions.unshift({
+    id: uid(),
+    type: 'expense',
+    amount: e.amount,
+    title: `EMI: ${e.name}`,
+    category: 'EMI',
+    accountId: srcId,
+    date: td(),
+    tags: ['#emi'],
+    notes: `EMI installment paid. ${e.months} months remaining.`
+  });
+
+  closeM();
+  save();
+  toast('EMI paid! Balance deducted & Next due date updated ✅');
+}
+
+function recForm() {
+  openM('🔁 Add Recurring', `
+    <label>Name</label><input id="rn" placeholder="Netflix / Rent">
+    <label>Amount</label><input id="ra" type="number">
+    <label>Frequency</label><select id="rf"><option>Monthly</option><option>Weekly</option><option>Yearly</option></select>
+    <label>Next Date</label><input id="rd" type="date" value="${td()}">
+    <button onclick="addRec()">Save</button>
+  `);
+}
+
+function addRec() {
+  if (!rn.value.trim() || !+ra.value) return toast('Details bhar');
+  DB.recurring.push({ id: uid(), name: rn.value.trim(), amount: +ra.value, frequency: rf.value, date: rd.value });
+  closeM();
+  save();
+}
 
 function accForm() {
-  openM('🏦 Add Account', '<label>Name</label><input id="an" placeholder="Bank / UPI / Wallet"><label>Opening Balance</label><input id="ab" type="number" value="0"><button onclick="addAcc()">Save</button>');
+  openM('🏦 Add Account', '<label>Name</label><input id="an" placeholder="Bank / Cash / UPI"><label>Opening Balance</label><input id="ab" type="number" value="0"><button onclick="addAcc()">Save</button>');
 }
+
 function addAcc() {
   if (!an.value.trim()) return toast('Account name chahiye');
   DB.accounts.push({ id: uid(), name: an.value.trim(), balance: +ab.value || 0 });
@@ -391,48 +798,93 @@ function addAcc() {
   save();
 }
 
-function recForm() {
-  openM('🔁 Add Recurring', '<label>Name</label><input id="rn" placeholder="HDFC"><label>Amount</label><input id="ra" type="number"><label>Frequency</label><select id="rf"><option>Monthly</option><option>Weekly</option><option>Yearly</option></select><label>Next Date</label><input id="rd" type="date" value="' + td() + '"><button onclick="addRec()">Save</button>');
-}
-function addRec() {
-  if (!rn.value || !+ra.value) return toast('Details bhar');
-  DB.recurring.push({ id: uid(), name: rn.value, amount: +ra.value, frequency: rf.value, date: rd.value });
-  closeM();
+function editAcc(id) {
+  const a = DB.accounts.find(x => x.id === id);
+  if (!a) return;
+  const newBal = prompt(`Edit opening balance for ${a.name}:`, a.balance);
+  if (newBal === null) return;
+  a.balance = Number(newBal) || 0;
   save();
+  toast('Account updated ✅');
 }
 
-function cardForm() {
-  openM('💳 Add Card', '<label>Card Name</label><input id="cn"><label>Limit</label><input id="cl" type="number"><label>Used</label><input id="cu" type="number" value="0"><label>Due Date</label><input id="cd" type="date" value="' + td() + '"><button onclick="addCard()">Save</button>');
-}
-function addCard() {
-  if (!cn.value || !+cl.value) return toast('Details bhar');
-  DB.cards.push({ id: uid(), name: cn.value, limit: +cl.value, used: +cu.value || 0, date: cd.value });
-  closeM();
-  save();
-}
+function renderTools() {
+  syncCardDueDates();
 
-function emiForm() {
-  openM('🧮 Add EMI', '<label>Name</label><input id="en"><label>Monthly EMI</label><input id="ea" type="number"><label>Months Left</label><input id="em" type="number"><label>Next Date</label><input id="ed" type="date" value="' + td() + '"><button onclick="addEMI()">Save</button>');
-}
-function addEMI() {
-  if (!en.value || !+ea.value) return toast('Details bhar');
-  DB.emis.push({ id: uid(), name: en.value, amount: +ea.value, months: +em.value || 0, date: ed.value });
-  closeM();
-  save();
+  cards.innerHTML = DB.cards.map(x => {
+    const st = checkDue(x.date, x.used);
+    const avail = Math.max(0, x.limit - (x.used || 0));
+    return `
+      <div class="item">
+        <div class="row">
+          <span>
+            <b>💳 ${esc(x.name)}</b> <span class="${st.cls}">${st.label}</span><br>
+            <small class="muted">Due: ${fd(x.date)} • Limit: ${money(x.limit)} (Avail: ${money(avail)})</small>
+          </span>
+          <b class="${x.used > 0 ? 'red' : 'green'}">${money(x.used)}</b>
+        </div>
+        <div class="actions" style="margin-top:8px">
+          ${x.used > 0 ? `<button onclick="payCard('${x.id}')">💳 Pay Bill</button>` : ''}
+          <button class="danger" onclick="remove('cards','${x.id}')">Delete</button>
+        </div>
+      </div>
+    `;
+  }).join('') || '<div class="empty">No cards or loans added.</div>';
+
+  emis.innerHTML = DB.emis.map(x => {
+    const st = checkDue(x.date, x.amount);
+    return `
+      <div class="item">
+        <div class="row">
+          <span>
+            <b>🧮 ${esc(x.name)}</b> <span class="${st.cls}">${st.label}</span><br>
+            <small class="muted">${x.months} months left • Next: ${fd(x.date)}</small>
+          </span>
+          <b>${money(x.amount)}</b>
+        </div>
+        <div class="actions" style="margin-top:8px">
+          ${x.months > 0 ? `<button class="secondary" onclick="payEMIInstallment('${x.id}')">Pay EMI & Deduct</button>` : ''}
+          <button class="danger" onclick="remove('emis','${x.id}')">Delete</button>
+        </div>
+      </div>
+    `;
+  }).join('') || '<div class="empty">No EMIs.</div>';
+
+  recs.innerHTML = DB.recurring.map(x => `
+    <div class="item row">
+      <span>🔁 ${esc(x.name)}<br><small class="muted">${x.frequency} • ${fd(x.date)}</small></span>
+      <span><b>${money(x.amount)}</b><br><button class="danger" onclick="remove('recurring','${x.id}')">Delete</button></span>
+    </div>
+  `).join('') || '<div class="empty">No recurring payments.</div>';
+
+  accs.innerHTML = DB.accounts.map(a => {
+    const txNet = DB.transactions.filter(t => t.accountId === a.id).reduce((s, t) => s + (t.type === 'income' ? t.amount : -t.amount), 0);
+    const currTotal = a.balance + txNet;
+    return `
+      <div class="item row">
+        <span>
+          <b>🏦 ${esc(a.name)}</b><br>
+          <small class="muted">Opening: ${money(a.balance)}</small>
+        </span>
+        <span>
+          <b>${money(currTotal)}</b><br>
+          <button class="secondary" style="padding:4px 8px;font-size:11px" onclick="editAcc('${a.id}')">Edit Bal</button>
+        </span>
+      </div>
+    `;
+  }).join('');
 }
 
 function goalForm() {
-  openM('🎯 Add Goal', '<label>Goal Name</label><input id="goal_name_input" placeholder="e.g. Phone"><label>Target Amount</label><input id="goal_target_input" type="number" min="1" placeholder="20000"><label>Already Saved</label><input id="goal_saved_input" type="number" min="0" value="0"><label>Deadline</label><input id="goal_date_input" type="date"><div class="actions"><button type="button" onclick="createGoal()">Save Goal</button><button type="button" class="secondary" onclick="closeM()">Cancel</button></div>');
+  openM('🎯 Add Goal', '<label>Goal Name</label><input id="goal_name_input" placeholder="e.g. Phone"><label>Target Amount</label><input id="goal_target_input" type="number" min="1"><label>Already Saved</label><input id="goal_saved_input" type="number" min="0" value="0"><label>Deadline</label><input id="goal_date_input" type="date"><div class="actions"><button type="button" onclick="createGoal()">Save Goal</button><button type="button" class="secondary" onclick="closeM()">Cancel</button></div>');
 }
+
 function createGoal() {
   const name = document.getElementById('goal_name_input').value.trim();
   const target = Number(document.getElementById('goal_target_input').value);
   const saved = Number(document.getElementById('goal_saved_input').value) || 0;
   const date = document.getElementById('goal_date_input').value;
-  if (!name) return toast('Goal name bharna hai');
-  if (!Number.isFinite(target) || target <= 0) return toast('Target amount bharna hai');
-  if (saved < 0 || saved > target) return toast('Saved amount target se zyada nahi ho sakta');
-  if (!Array.isArray(DB.goals)) DB.goals = [];
+  if (!name || !target) return toast('Details bharna zaroori hai');
   DB.goals.unshift({ id: uid(), name, target, saved, date });
   closeM();
   save();
@@ -444,66 +896,16 @@ function addGoalAmount(i) {
   if (!g) return;
   const n = Number(prompt('Kitna amount add karna hai?', 500));
   if (!Number.isFinite(n) || n <= 0) return;
-  if (g.saved + n > g.target) return toast('Target se zyada save nahi kar sakte');
   g.saved += n;
   save();
   toast('Goal updated ✅');
 }
 
-function remove(kind, i) {
-  if (!confirm('Delete?')) return;
-  let x = DB[kind].find(a => a.id === i);
-  DB.trash.push({ kind, data: x });
-  DB[kind] = DB[kind].filter(a => a.id !== i);
-  save();
-}
-
-function renderTools() {
-  recs.innerHTML = DB.recurring.map(x => `
-    <div class="item row">
-      <span>🔁 ${esc(x.name)}<br><small class="muted">${x.frequency} • ${fd(x.date)}</small></span>
-      <span><b>${money(x.amount)}</b><br><button class="danger" onclick="remove('recurring','${x.id}')">Delete</button></span>
-    </div>
-  `).join('') || '<div class="empty">No recurring payments.</div>';
-
-  cards.innerHTML = DB.cards.map(x => `
-    <div class="item row">
-      <span>💳 ${esc(x.name)}<br><small class="muted">Due ${fd(x.date)} • Used ${money(x.used)}</small></span>
-      <span><b>Limit ${money(x.limit)}</b><br><button class="danger" onclick="remove('cards','${x.id}')">Delete</button></span>
-    </div>
-  `).join('') || '<div class="empty">No cards.</div>';
-
-  emis.innerHTML = DB.emis.map(x => `
-    <div class="item row">
-      <span>🧮 ${esc(x.name)}<br><small class="muted">${x.months} months left • ${fd(x.date)}</small></span>
-      <span><b>${money(x.amount)}</b><br><button class="danger" onclick="remove('emis','${x.id}')">Delete</button></span>
-    </div>
-  `).join('') || '<div class="empty">No EMIs.</div>';
-
-  accs.innerHTML = DB.accounts.map(a => {
-    let n = DB.transactions.filter(t => t.accountId === a.id).reduce((s, t) => s + (t.type === 'income' ? t.amount : -t.amount), 0);
-    return `<div class="item row"><span>🏦 ${esc(a.name)}</span><b>${money(a.balance + n)}</b></div>`;
-  }).join('');
-
-  let u = [
-    ...DB.emis.map(x => ({ n: x.name, d: x.date, a: x.amount, k: '🧮 EMI' })),
-    ...DB.cards.map(x => ({ n: x.name, d: x.date, a: x.used, k: '💳 Card' })),
-    ...DB.recurring.map(x => ({ n: x.name, d: x.date, a: x.amount, k: '🔔 Recurring' }))
-  ].sort((a, b) => (a.d || '').localeCompare(b.d || '')).slice(0, 8);
-
-  up.innerHTML = u.map(x => `
-    <div class="item row">
-      <span>${x.k} ${esc(x.n)}<br><small class="muted">${fd(x.d)}</small></span>
-      <b>${money(x.a)}</b>
-    </div>
-  `).join('') || '<div class="empty">No upcoming payments.</div>';
-}
-
 function renderGoals() {
-  const container = document.getElementById('goals-list');
+  const container = document.getElementById('goals_list');
   challenge.textContent = money(DB.challenge || 0);
   container.innerHTML = DB.goals.map(g => {
-    let p = Math.min(100, Math.round((g.saved / g.target) * 100));
+    const p = Math.min(100, Math.round((g.saved / g.target) * 100));
     return `
       <div class="item">
         <div class="row">
@@ -520,11 +922,12 @@ function renderGoals() {
   }).join('') || '<div class="empty">No goals added yet.</div>';
 }
 
-function setPin() {
-  if (!pin.value || pin.value.length < 4) return toast('Kam se kam 4 digit PIN enter karein');
-  DB.pin = pin.value;
+function remove(kind, i) {
+  if (!confirm('Delete karna hai?')) return;
+  const x = DB[kind].find(a => a.id === i);
+  DB.trash.push({ kind, data: x });
+  DB[kind] = DB[kind].filter(a => a.id !== i);
   save();
-  toast('PIN Lock Saved 🔐');
 }
 
 function backup() {
@@ -543,7 +946,7 @@ function restore(elem) {
     try {
       DB = JSON.parse(e.target.result);
       save();
-      toast('Backup restored successfully ✅');
+      toast('Backup restored ✅');
     } catch (err) {
       toast('Invalid JSON backup file');
     }
@@ -553,13 +956,12 @@ function restore(elem) {
 
 function csv() {
   if (!DB.transactions.length) return toast('No transactions to export');
-  let rows = [['Date', 'Type', 'Category', 'Title', 'Amount', 'Account', 'Notes']];
+  const rows = [['Date', 'Type', 'Category', 'Title', 'Amount', 'Account', 'Tags', 'Notes']];
   DB.transactions.forEach(t => {
-    let accName = DB.accounts.find(a => a.id === t.accountId)?.name || '';
-    rows.push([t.date, t.type, t.category, t.title, t.amount, accName, t.notes]);
+    rows.push([t.date, t.type, t.category, t.title, t.amount, getAccountName(t.accountId), (t.tags || []).join(' '), t.notes]);
   });
-  let csvContent = 'data:text/csv;charset=utf-8,' + rows.map(e => e.map(x => `"${String(x||'').replace(/"/g, '""')}"`).join(',')).join('\n');
-  let a = document.createElement('a');
+  const csvContent = 'data:text/csv;charset=utf-8,' + rows.map(e => e.map(x => `"${String(x || '').replace(/"/g, '""')}"`).join(',')).join('\n');
+  const a = document.createElement('a');
   a.href = encodeURI(csvContent);
   a.download = `transactions_${td()}.csv`;
   a.click();
@@ -575,7 +977,7 @@ function trashForm() {
 }
 
 function restoreTrash(idx) {
-  let item = DB.trash[idx];
+  const item = DB.trash[idx];
   if (!item) return;
   DB[item.kind].unshift(item.data);
   DB.trash.splice(idx, 1);
@@ -594,8 +996,7 @@ function render() {
   document.body.classList.toggle('dark', !!DB.dark);
   if (document.getElementById('cur')) document.getElementById('cur').value = DB.currency || 'INR';
   if (document.getElementById('budget')) document.getElementById('budget').value = DB.budget || '';
-  if (document.getElementById('pin')) document.getElementById('pin').value = DB.pin || '';
-  
+
   renderHome();
   populateFilters();
   renderHist();
@@ -603,7 +1004,11 @@ function render() {
   renderGoals();
 }
 
-// Initial render
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+
+checkLock();
 render();
 </script>
 </body>

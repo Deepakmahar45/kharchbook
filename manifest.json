@@ -13,15 +13,44 @@
     }
   ]
 }
-"description": "Simple daily expense tracker and budget manager",
-"orientation": "portrait",
-"categories": ["finance", "productivity"]
+"description": "Daily expense tracker and budget manager",
+  "orientation": "portrait",
+  "categories": ["finance", "productivity"],
   "screenshots": [
     {
-      "src": "screenshot1.png",
+      "src": "Screenshot 1.jpg",
       "sizes": "1080x2400",
-      "type": "image/png",
+      "type": "image/jpeg",
       "form_factor": "narrow",
-      "label": "KharchBook Dashboard"
+      "label": "KharchBook Screen 1"
+    },
+    {
+      "src": "Screenshot 2.jpg",
+      "sizes": "1080x2400",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "KharchBook Screen 2"
+    },
+    {
+      "src": "Screenshot 3.jpg",
+      "sizes": "1080x2400",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "KharchBook Screen 3"
+    },
+    {
+      "src": "Screenshot 4.jpg",
+      "sizes": "1080x2400",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "KharchBook Screen 4"
+    },
+    {
+      "src": "Screenshot 5.jpg",
+      "sizes": "1080x2400",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "KharchBook Screen 5"
     }
-  ],
+  ]
+      

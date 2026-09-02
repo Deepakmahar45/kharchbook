@@ -8,48 +8,80 @@
   <title>KharchBook 2.0</title>
   <style>
     :root{--bg:#f1f2f4;--card:#fff;--text:#151515;--muted:#707070;--line:#ddd;--green:#087f5b;--red:#c92a2a;--yellow:#d97706}
-    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
     body.dark{--bg:#121212;--card:#1d1d1d;--text:#f5f5f5;--muted:#aaa;--line:#383838}
     header{padding:16px 18px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--bg);z-index:10}
-    .logo{font-size:24px;font-weight:800}.sub{font-size:12px;color:var(--muted);margin-top:2px}
+    .logo{font-size:24px;font-weight:800}
+    .sub{font-size:12px;color:var(--muted);margin-top:2px}
     .moon{width:44px;height:44px;border:1px solid var(--line);border-radius:14px;background:var(--card);font-size:20px;cursor:pointer}
     nav{display:flex;gap:8px;overflow-x:auto;padding:6px 18px 12px;position:sticky;top:70px;background:var(--bg);z-index:9}
     nav button{white-space:nowrap;border:0;border-radius:14px;padding:10px 16px;background:#e5e6e9;color:var(--text);font-weight:700;font-size:14px;cursor:pointer}
-    body.dark nav button{background:#272727}nav button.active{background:#111;color:#fff}body.dark nav button.active{background:#fff;color:#111}
-    main{padding:0 18px 100px;max-width:850px;margin:auto}.page{display:none}.page.active{display:block}
+    body.dark nav button{background:#272727}
+    nav button.active{background:#111;color:#fff}
+    body.dark nav button.active{background:#fff;color:#111}
+    main{padding:0 18px 100px;max-width:850px;margin:auto}
+    .page{display:none}
+    .page.active{display:block}
     .card,.stat{background:var(--card);border-radius:20px;padding:18px;margin:12px 0;box-shadow:0 2px 8px #00000008}
-    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{margin:0}.stat small{color:var(--muted);font-size:12px}
-    .stat b{display:block;font-size:20px;margin-top:4px}.green{color:var(--green)}.red{color:var(--red)}.muted{color:var(--muted)}
-    h2{margin:0 0 12px;font-size:20px}h3{margin:0 0 8px;font-size:16px}.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
-    .item{padding:12px 0;border-bottom:1px solid var(--line)}.pill{display:inline-block;padding:3px 8px;border-radius:99px;background:#eee;color:#555;font-size:11px}
-    body.dark .pill{background:#303030;color:#ccc}.badge-ok{background:#e6fcf5;color:#087f5b;padding:3px 7px;border-radius:6px;font-size:11px;font-weight:bold}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .stat{margin:0}
+    .stat small{color:var(--muted);font-size:12px}
+    .stat b{display:block;font-size:20px;margin-top:4px}
+    .green{color:var(--green)}
+    .red{color:var(--red)}
+    .muted{color:var(--muted)}
+    h2{margin:0 0 12px;font-size:20px}
+    h3{margin:0 0 8px;font-size:16px}
+    .row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+    .item{padding:12px 0;border-bottom:1px solid var(--line)}
+    .pill{display:inline-block;padding:3px 8px;border-radius:99px;background:#eee;color:#555;font-size:11px}
+    body.dark .pill{background:#303030;color:#ccc}
+    .badge-ok{background:#e6fcf5;color:#087f5b;padding:3px 7px;border-radius:6px;font-size:11px;font-weight:bold}
     .badge-warn{background:#fef3c7;color:#92400e;padding:3px 7px;border-radius:6px;font-size:11px;font-weight:bold}
     .badge-danger{background:#fee2e2;color:#991b1b;padding:3px 7px;border-radius:6px;font-size:11px;font-weight:bold}
     .tag{display:inline-block;padding:2px 7px;border-radius:6px;background:#e2e8f0;color:#334155;font-size:11px;margin-right:4px}
-    body.dark .tag{background:#334155;color:#f1f5f9}button{border:0;border-radius:12px;padding:11px 15px;background:#111;color:#fff;font-weight:700;font-size:14px;cursor:pointer}
-    body.dark button{background:#eee;color:#111}.secondary{background:#e8e8e8!important;color:#111!important}
-    body.dark .secondary{background:#303030!important;color:#fff!important}.danger{background:#c92a2a!important;color:#fff!important}
-    .full{width:100%}.actions{display:flex;gap:6px;flex-wrap:wrap}.actions>*{flex:1}
+    body.dark .tag{background:#334155;color:#f1f5f9}
+    button{border:0;border-radius:12px;padding:11px 15px;background:#111;color:#fff;font-weight:700;font-size:14px;cursor:pointer}
+    body.dark button{background:#eee;color:#111}
+    .secondary{background:#e8e8e8!important;color:#111!important}
+    body.dark .secondary{background:#303030!important;color:#fff!important}
+    .danger{background:#c92a2a!important;color:#fff!important}
+    .full{width:100%}
+    .actions{display:flex;gap:6px;flex-wrap:wrap}
+    .actions>*{flex:1}
     input,select,textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--text);font-size:15px;margin:4px 0 8px}
-    textarea{min-height:70px}label{font-size:12px;font-weight:700;color:var(--muted)}
-    .progress{height:10px;background:#e5e5e5;border-radius:99px;overflow:hidden;margin:6px 0}.bar{height:100%;background:#111;width:0}
-    .searchbar{display:grid;grid-template-columns:1fr 1fr;gap:6px}.empty{text-align:center;color:var(--muted);padding:20px}
-    .bottom{position:fixed;left:16px;right:16px;bottom:14px;z-index:20}.bottom button{width:100%;font-size:17px;padding:15px;border-radius:18px}
-    .modal{position:fixed;inset:0;background:#0008;display:none;align-items:flex-end;justify-content:center;z-index:50}.modal.show{display:flex}
+    textarea{min-height:70px}
+    label{font-size:12px;font-weight:700;color:var(--muted)}
+    .progress{height:10px;background:#e5e5e5;border-radius:99px;overflow:hidden;margin:6px 0}
+    .bar{height:100%;background:#111;width:0}
+    .searchbar{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+    .empty{text-align:center;color:var(--muted);padding:20px}
+    .bottom{position:fixed;left:16px;right:16px;bottom:14px;z-index:20}
+    .bottom button{width:100%;font-size:17px;padding:15px;border-radius:18px}
+    .modal{position:fixed;inset:0;background:#0008;display:none;align-items:flex-end;justify-content:center;z-index:50}
+    .modal.show{display:flex}
     .sheet{background:var(--card);color:var(--text);width:100%;max-width:600px;border-radius:24px 24px 0 0;padding:18px;max-height:90vh;overflow-y:auto}
     .close{float:right;background:transparent!important;color:var(--text)!important;font-size:24px;padding:0 6px;cursor:pointer}
-    hr{border:0;border-top:1px solid var(--line);margin:16px 0}.banner{padding:10px 14px;border-radius:12px;margin-bottom:10px;font-weight:600;font-size:13px}
-    .banner-danger{background:#fee2e2;color:#991b1b;border:1px solid #f87171}.banner-warn{background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+    hr{border:0;border-top:1px solid var(--line);margin:16px 0}
+    .banner{padding:10px 14px;border-radius:12px;margin-bottom:10px;font-weight:600;font-size:13px}
+    .banner-danger{background:#fee2e2;color:#991b1b;border:1px solid #f87171}
+    .banner-warn{background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
     .cal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
     .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
     .cal-head-day{font-size:11px;font-weight:bold;color:var(--muted);padding:6px 0}
     .cal-cell{min-height:42px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:10px;cursor:pointer;font-size:13px;border:1px solid transparent}
-    .cal-cell.today{border-color:var(--line);font-weight:bold}.cal-cell.active-day{background:#111!important;color:#fff!important}
-    body.dark .cal-cell.active-day{background:#eee!important;color:#111!important}.cal-dot{width:5px;height:5px;border-radius:50%;background:var(--red);margin-top:2px}
+    .cal-cell.today{border-color:var(--line);font-weight:bold}
+    .cal-cell.active-day{background:#111!important;color:#fff!important}
+    body.dark .cal-cell.active-day{background:#eee!important;color:#111!important}
+    .cal-dot{width:5px;height:5px;border-radius:50%;background:var(--red);margin-top:2px}
     .cal-cell.active-day .cal-dot{background:#fff}
     #lockscreen{position:fixed;inset:0;background:var(--bg);color:var(--text);z-index:9999;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
     #lockscreen input{max-width:220px;text-align:center;font-size:26px;letter-spacing:8px}
-    @media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}.bottom{max-width:600px;left:50%;transform:translateX(-50%);width:570px}}
+    @media(min-width:700px){
+      .grid{grid-template-columns:repeat(4,1fr)}
+      .bottom{max-width:600px;left:50%;transform:translateX(-50%);width:570px}
+    }
   </style>
 </head>
 <body>
@@ -58,7 +90,9 @@
   <div class="logo">🔐 KharchBook</div>
   <p class="muted">Enter PIN to Unlock</p>
   <input type="password" id="unlock_pin" maxlength="6" inputmode="numeric" placeholder="••••">
-  <div style="width:100%;max-width:220px;margin-top:10px"><button class="full" onclick="verifyPin()">Unlock</button></div>
+  <div style="width:100%;max-width:220px;margin-top:10px">
+    <button class="full" onclick="verifyPin()">Unlock</button>
+  </div>
 </div>
 
 <header>
@@ -107,7 +141,11 @@
       <h2>📜 Transaction History</h2>
       <div class="searchbar">
         <input id="q" placeholder="Search title, amount, #tag, note...">
-        <select id="ft"><option value="">All types</option><option value="expense">Expense</option><option value="income">Income</option></select>
+        <select id="ft">
+          <option value="">All types</option>
+          <option value="expense">Expense</option>
+          <option value="income">Income</option>
+        </select>
       </div>
       <div class="searchbar">
         <select id="fc"><option value="">All categories</option></select>
@@ -160,8 +198,11 @@
     <div class="card">
       <h2>💱 Currency</h2>
       <select id="cur" onchange="DB.currency=this.value;save()">
-        <option value="INR">INR (₹)</option><option value="USD">USD ($)</option>
-        <option value="EUR">EUR (€)</option><option value="GBP">GBP (£)</option><option value="AED">AED (د.إ)</option>
+        <option value="INR">INR (₹)</option>
+        <option value="USD">USD ($)</option>
+        <option value="EUR">EUR (€)</option>
+        <option value="GBP">GBP (£)</option>
+        <option value="AED">AED (د.إ)</option>
       </select>
     </div>
   </section>
@@ -215,14 +256,28 @@
 <div id="toast" style="position:fixed;left:50%;bottom:85px;transform:translateX(-50%);background:#111;color:#fff;padding:12px 18px;border-radius:99px;display:none;z-index:99999"></div>
 
 <script>
-const K = 'kharchbook_2_0_v9';
+// @ts-nocheck
+
+const K = 'kharchbook_2_0_v10';
 let isUnlocked = false;
+let pendingConfirmAction = null;
 
 let DB = JSON.parse(localStorage.getItem(K) || 'null') || {
   transactions: [],
-  accounts: [{ id: uid(), name: 'Cash', balance: 0 }, { id: uid(), name: 'Bank', balance: 0 }],
-  recurring: [], cards: [], emis: [], goals: [], trash: [],
-  budget: 0, currency: 'INR', dark: false, challenge: 0, pinHash: ''
+  accounts: [
+    { id: uid(), name: 'Cash', balance: 0 },
+    { id: uid(), name: 'Bank', balance: 0 }
+  ],
+  recurring: [],
+  cards: [],
+  emis: [],
+  goals: [],
+  trash: [],
+  budget: 0,
+  currency: 'INR',
+  dark: false,
+  challenge: 0,
+  pinHash: ''
 };
 
 function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
@@ -246,16 +301,42 @@ function td() { return new Date().toISOString().slice(0, 10); }
 function fd(x) { return x ? new Date(x + 'T00:00').toLocaleDateString('en-IN') : ''; }
 function openM(t, b) { mb.innerHTML = '<h2>' + t + '</h2>' + b; modal.classList.add('show'); }
 
+// Custom In-App Confirmation Modal (Replaces browser gray dialogs)
+function confirmAction(title, msg, onConfirm) {
+  pendingConfirmAction = onConfirm;
+  openM(title, `
+    <p style="font-size:15px;margin:12px 0 22px">${msg}</p>
+    <div class="actions">
+      <button class="danger" onclick="executePendingAction()">Delete</button>
+      <button class="secondary" onclick="closeM()">Cancel</button>
+    </div>
+  `);
+}
+
+function executePendingAction() {
+  if (typeof pendingConfirmAction === 'function') {
+    pendingConfirmAction();
+    pendingConfirmAction = null;
+  }
+  closeM();
+}
+
 function getNextMonthDate(dStr) {
   if (!dStr) return td();
   const parts = dStr.split('-');
-  let y = parseInt(parts[0], 10), m = parseInt(parts[1], 10), d = parseInt(parts[2], 10);
+  let y = parseInt(parts[0], 10);
+  let m = parseInt(parts[1], 10);
+  let d = parseInt(parts[2], 10);
   m += 1;
-  if (m > 12) { m = 1; y += 1; }
+  if (m > 12) {
+    m = 1;
+    y += 1;
+  }
   const maxD = new Date(y, m, 0).getDate();
   return `${y}-${String(m).padStart(2, '0')}-${String(Math.min(d, maxD)).padStart(2, '0')}`;
 }
 
+// Auto roll past due dates if balance is fully paid
 function syncCardDueDates() {
   let changed = false;
   DB.cards.forEach(c => {
@@ -267,6 +348,7 @@ function syncCardDueDates() {
   if (changed) localStorage.setItem(K, JSON.stringify(DB));
 }
 
+// SHA-256 App Lock
 async function sha256(str) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
   return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
@@ -403,6 +485,7 @@ function saveTx(edit) {
     }
   }
 
+  // Credit Card Expense Logic (Auto-shifts expired date on fresh spend)
   if (selectedAcc.startsWith('card_')) {
     const newCid = selectedAcc.replace('card_', '');
     const newCard = DB.cards.find(c => c.id === newCid);
@@ -445,19 +528,21 @@ function saveTx(edit) {
 }
 
 function delTx(i) {
-  if (!confirm('Trash me bhejna hai?')) return;
-  const t = DB.transactions.find(x => x.id === i);
-  if (t && t.accountId && t.accountId.startsWith('card_')) {
-    const cid = t.accountId.replace('card_', '');
-    const card = DB.cards.find(c => c.id === cid);
-    if (card) {
-      if (t.type === 'expense') card.used = Math.max(0, card.used - t.amount);
-      else if (t.type === 'income') card.used += t.amount;
+  confirmAction('🗑️ Delete Transaction', 'Kya aap is transaction ko trash me bhejna chahte hain?', () => {
+    const t = DB.transactions.find(x => x.id === i);
+    if (t && t.accountId && t.accountId.startsWith('card_')) {
+      const cid = t.accountId.replace('card_', '');
+      const card = DB.cards.find(c => c.id === cid);
+      if (card) {
+        if (t.type === 'expense') card.used = Math.max(0, card.used - t.amount);
+        else if (t.type === 'income') card.used += t.amount;
+      }
     }
-  }
-  DB.trash.push({ kind: 'transactions', data: t });
-  DB.transactions = DB.transactions.filter(x => x.id !== i);
-  save();
+    DB.trash.push({ kind: 'transactions', data: t });
+    DB.transactions = DB.transactions.filter(x => x.id !== i);
+    save();
+    toast('Moved to Trash 🗑️');
+  });
 }
 
 function checkDue(dateStr, outstanding = 1) {
@@ -511,6 +596,7 @@ function renderHome() {
     bm.textContent = 'Budget set karo';
   }
 
+  // Due reminders show only when outstanding > 0
   const urgentCards = DB.cards.filter(c => (c.used || 0) > 0).map(c => ({ name: c.name, st: checkDue(c.date, c.used) })).filter(x => x.st && x.st.isDue);
   const urgentEmis = DB.emis.filter(e => (e.months || 0) > 0).map(e => ({ name: e.name, st: checkDue(e.date, e.amount) })).filter(x => x.st && x.st.isDue);
 
@@ -535,22 +621,30 @@ function renderHome() {
 }
 
 function populateFilters() {
-  const currentC = fc.value, currentA = fa.value, currentTag = ftag.value;
+  const currentC = fc.value;
+  const currentA = fa.value;
+  const currentTag = ftag.value;
+
   fc.innerHTML = '<option value="">All categories</option>' + [...new Set(DB.transactions.map(t => t.category))].map(x => `<option value="${esc(x)}" ${currentC === x ? 'selected' : ''}>${esc(x)}</option>`).join('');
   fa.innerHTML = '<option value="">All accounts / cards</option>' + getAccountOptions(currentA);
+
   const allTags = [...new Set(DB.transactions.flatMap(t => t.tags || []))];
   ftag.innerHTML = '<option value="">All tags</option>' + allTags.map(x => `<option value="${esc(x)}" ${currentTag === x ? 'selected' : ''}>${esc(x)}</option>`).join('');
 }
 
 function renderHist() {
   const q = (document.getElementById('q').value || '').trim().toLowerCase();
-  const T = ft.value, C = fc.value, A = fa.value, Tag = ftag.value;
+  const T = ft.value;
+  const C = fc.value;
+  const A = fa.value;
+  const Tag = ftag.value;
 
   const filtered = DB.transactions.filter(t => {
     const matchType = !T || t.type === T;
     const matchCat = !C || t.category === C;
     const matchAcc = !A || t.accountId === A;
     const matchTag = !Tag || (t.tags && t.tags.includes(Tag));
+
     let matchQuery = true;
     if (q) {
       const matchText = (t.title + ' ' + t.category + ' ' + (t.notes || '')).toLowerCase().includes(q);
@@ -591,7 +685,8 @@ let currentCalDate = new Date();
 let selectedDateStr = td();
 
 function renderCalendar() {
-  const y = currentCalDate.getFullYear(), m = currentCalDate.getMonth();
+  const y = currentCalDate.getFullYear();
+  const m = currentCalDate.getMonth();
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   document.getElementById('cal_month_title').textContent = `${monthNames[m]} ${y}`;
 
@@ -923,11 +1018,14 @@ function renderGoals() {
 }
 
 function remove(kind, i) {
-  if (!confirm('Delete karna hai?')) return;
-  const x = DB[kind].find(a => a.id === i);
-  DB.trash.push({ kind, data: x });
-  DB[kind] = DB[kind].filter(a => a.id !== i);
-  save();
+  const label = kind === 'goals' ? 'Goal' : kind === 'cards' ? 'Card/Loan' : kind === 'emis' ? 'EMI' : 'Item';
+  confirmAction(`🗑️ Delete ${label}`, `Kya aap is ${label} ko delete karna chahte hain?`, () => {
+    const x = DB[kind].find(a => a.id === i);
+    DB.trash.push({ kind, data: x });
+    DB[kind] = DB[kind].filter(a => a.id !== i);
+    save();
+    toast(`${label} deleted 🗑️`);
+  });
 }
 
 function backup() {
@@ -987,9 +1085,10 @@ function restoreTrash(idx) {
 }
 
 function wipe() {
-  if (!confirm('Kya aap sach me poora data delete karna chahte hain?')) return;
-  localStorage.removeItem(K);
-  location.reload();
+  confirmAction('⚠️ Reset App Data', 'Kya aap sach me poora local data permanently delete karna chahte hain?', () => {
+    localStorage.removeItem(K);
+    location.reload();
+  });
 }
 
 function render() {

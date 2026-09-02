@@ -6,6 +6,12 @@
   <meta name="theme-color" content="#111">
   <link rel="manifest" href="manifest.json">
   <title>KharchBook 2.0</title>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
   <style>
     :root{--bg:#f1f2f4;--card:#fff;--text:#151515;--muted:#707070;--line:#ddd;--green:#087f5b;--red:#c92a2a;--yellow:#d97706}
     *{box-sizing:border-box}
@@ -97,8 +103,8 @@
 
 <header>
   <div>
-    <div class="logo">💰 KharchBook <span class="pill">2.0</span></div>
-    <div class="sub">Your money, your control • offline</div>
+    <div class="logo">💰 KharchBook <span class="pill" id="sync_indicator">Offline</span></div>
+    <div class="sub">Your money, your control • cloud sync</div>
   </div>
   <button class="moon" onclick="dark()">🌙</button>
 </header>
@@ -224,6 +230,10 @@
 
   <section id="settings" class="page">
     <div class="card">
+      <h2>☁️ Firebase Cloud Sync</h2>
+      <div id="auth_user_status" style="margin-bottom:12px;font-size:14px" class="muted">Checking login status...</div>
+      <div id="auth_actions"></div>
+      <hr>
       <h2>⚙️ Settings</h2>
       <label>Monthly Budget</label>
       <input id="budget" type="number">
@@ -261,6 +271,21 @@
 const K = 'kharchbook_2_0_v10';
 let isUnlocked = false;
 let pendingConfirmAction = null;
+let currentUser = null;
+
+// Firebase Init
+const firebaseConfig = {
+  apiKey: "AIzaSyDWkHAb00t2wLdvMmmrGjUELGVjcxeXVlU",
+  authDomain: "kharchbook-6f1a0.firebaseapp.com",
+  projectId: "kharchbook-6f1a0",
+  storageBucket: "kharchbook-6f1a0.firebasestorage.app",
+  messagingSenderId: "453070494733",
+  appId: "1:453070494733:web:237eab8cc71c3eb177c944"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
 let DB = JSON.parse(localStorage.getItem(K) || 'null') || {
   transactions: [],
@@ -281,7 +306,15 @@ let DB = JSON.parse(localStorage.getItem(K) || 'null') || {
 };
 
 function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
-function save() { localStorage.setItem(K, JSON.stringify(DB)); render(); }
+
+function save(syncToCloud = true) {
+  localStorage.setItem(K, JSON.stringify(DB));
+  render();
+  if (syncToCloud && currentUser) {
+    pushToFirestore();
+  }
+}
+
 function closeM() { modal.classList.remove('show'); }
 function toast(x) {
   const toastEl = document.getElementById('toast');
@@ -301,7 +334,7 @@ function td() { return new Date().toISOString().slice(0, 10); }
 function fd(x) { return x ? new Date(x + 'T00:00').toLocaleDateString('en-IN') : ''; }
 function openM(t, b) { mb.innerHTML = '<h2>' + t + '</h2>' + b; modal.classList.add('show'); }
 
-// Custom In-App Confirmation Modal (Replaces browser gray dialogs)
+// Custom In-App Confirmation Modal (Replaces browser popups)
 function confirmAction(title, msg, onConfirm) {
   pendingConfirmAction = onConfirm;
   openM(title, `
@@ -409,6 +442,81 @@ document.querySelectorAll('nav button').forEach(b => b.onclick = () => {
   render();
 });
 
+// Firebase Auth & Cloud Sync Logic
+auth.onAuthStateChanged(user => {
+  currentUser = user;
+  const statusEl = document.getElementById('auth_user_status');
+  const actionsEl = document.getElementById('auth_actions');
+  const indicator = document.getElementById('sync_indicator');
+
+  if (user) {
+    statusEl.innerHTML = `Connected as: <b>${esc(user.email)}</b>`;
+    actionsEl.innerHTML = `
+      <div class="actions">
+        <button class="secondary" onclick="pushToFirestore(true)">☁️ Sync to Cloud Now</button>
+        <button class="danger" onclick="logoutGoogle()">Logout</button>
+      </div>
+    `;
+    indicator.textContent = '☁️ Synced';
+    indicator.className = 'pill badge-ok';
+    pullFromFirestore();
+  } else {
+    statusEl.textContent = 'Offline Mode (Local Storage only). Google se login karke data cloud par sync karein:';
+    actionsEl.innerHTML = `<button onclick="loginGoogle()" class="full">🔑 Sign In with Google</button>`;
+    indicator.textContent = 'Offline';
+    indicator.className = 'pill';
+  }
+});
+
+function loginGoogle() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  auth.signInWithPopup(provider).catch(err => {
+    toast('Login Error: ' + err.message);
+  });
+}
+
+function logoutGoogle() {
+  auth.signOut().then(() => {
+    toast('Logged out 👋');
+  });
+}
+
+function pushToFirestore(showToast = false) {
+  if (!currentUser) return;
+  const indicator = document.getElementById('sync_indicator');
+  indicator.textContent = 'Syncing...';
+  
+  db.collection('users').doc(currentUser.uid).set({
+    data: JSON.stringify(DB),
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+  }).then(() => {
+    indicator.textContent = '☁️ Synced';
+    if (showToast) toast('Cloud par sync ho gaya ☁️✅');
+  }).catch(err => {
+    indicator.textContent = '⚠️ Sync Err';
+    toast('Sync error: ' + err.message);
+  });
+}
+
+function pullFromFirestore() {
+  if (!currentUser) return;
+  db.collection('users').doc(currentUser.uid).get().then(doc => {
+    if (doc.exists && doc.data().data) {
+      const cloudData = JSON.parse(doc.data().data);
+      if (cloudData && cloudData.transactions) {
+        DB = cloudData;
+        localStorage.setItem(K, JSON.stringify(DB));
+        render();
+        toast('Cloud data loaded ☁️');
+      }
+    } else {
+      pushToFirestore();
+    }
+  }).catch(err => {
+    toast('Cloud load error: ' + err.message);
+  });
+}
+
 function getAccountOptions(selectedId = '') {
   let html = '<optgroup label="🏦 Cash / Bank Accounts">';
   html += DB.accounts.map(a => `<option value="${a.id}" ${selectedId === a.id ? 'selected' : ''}>🏦 ${esc(a.name)}</option>`).join('');
@@ -485,7 +593,7 @@ function saveTx(edit) {
     }
   }
 
-  // Credit Card Expense Logic (Auto-shifts expired date on fresh spend)
+  // Credit Card Expense Logic
   if (selectedAcc.startsWith('card_')) {
     const newCid = selectedAcc.replace('card_', '');
     const newCard = DB.cards.find(c => c.id === newCid);
@@ -596,7 +704,6 @@ function renderHome() {
     bm.textContent = 'Budget set karo';
   }
 
-  // Due reminders show only when outstanding > 0
   const urgentCards = DB.cards.filter(c => (c.used || 0) > 0).map(c => ({ name: c.name, st: checkDue(c.date, c.used) })).filter(x => x.st && x.st.isDue);
   const urgentEmis = DB.emis.filter(e => (e.months || 0) > 0).map(e => ({ name: e.name, st: checkDue(e.date, e.amount) })).filter(x => x.st && x.st.isDue);
 

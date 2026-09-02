@@ -13,3 +13,15 @@
     }
   ]
 }
+"description": "Simple daily expense tracker and budget manager",
+"orientation": "portrait",
+"categories": ["finance", "productivity"]
+  "screenshots": [
+    {
+      "src": "screenshot1.png",
+      "sizes": "1080x2400",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "KharchBook Dashboard"
+    }
+  ],
